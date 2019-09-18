@@ -1,0 +1,89 @@
+<#
+ #
+ # Copyright (C) 2018 Eaton
+ #
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License along
+ # with this program; if not, write to the Free Software Foundation, Inc.,
+ # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ #
+ #><#
+/*!
+ * \file rest_srr_GET.ecpp
+ * \author Xavier Millieret <XavierMillieret@Eaton.com>
+ * \brief Implementation of GET to retrieve features list.
+ */
+ #><%pre>
+
+#include <string>
+#include <fstream>
+#include <memory>
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/regex.h>
+#include <fty_common_messagebus.h>
+
+#include "fty_common_rest_helpers.h"
+#include "fty-srr-rest.h"
+#include "fty_srr_dto.h"
+        
+/**
+ * Get SRR capabilities.
+ *
+ */
+static dto::srr::SrrFeaturesListDto getFeatureListManaged()
+{
+    dto::srr::SrrFeaturesListDto featuresListDto;
+    
+    dto::srr::SrrQueryDto query(GET_ACTION);
+    messagebus::UserData reqData;
+    reqData << query;
+    messagebus::UserData respData = sendRequest(GET_ACTION, reqData);
+    respData >> featuresListDto;
+
+    return featuresListDto;
+    
+}
+
+</%pre>
+<%request scope="global">
+UserInfo user;
+//std::string gaccess_token;
+</%request>
+<%cpp>
+    // check user permissions
+    static const std::map <BiosProfile, std::string> PERMISSIONS = {
+            {BiosProfile::Admin, "R"}
+    };
+
+    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+
+    dto::srr::SrrFeaturesListDto featuresListDto = getFeatureListManaged();
+    
+    // Build the json result
+    cxxtools::SerializationInfo jsonResp;
+    jsonResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
+    cxxtools::SerializationInfo& siFeaturesList = jsonResp.addMember(FEATURE_LIST_NAME);
+    siFeaturesList.setCategory(cxxtools::SerializationInfo::Category::Array);
+
+    for (const auto& featureName : featuresListDto.featuresList)
+    {
+        cxxtools::SerializationInfo siTemp;
+        siTemp.addMember(FEATURE_NAME) <<= featureName;
+        siFeaturesList.addMember("") <<= siTemp;
+    }
+    cxxtools::JsonSerializer serializer(reply.out());
+    serializer.serialize(jsonResp).finish();
+</%cpp>

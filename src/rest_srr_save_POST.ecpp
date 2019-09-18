@@ -1,0 +1,83 @@
+<#
+ #
+ # Copyright (C) 2018 Eaton
+ #
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License along
+ # with this program; if not, write to the Free Software Foundation, Inc.,
+ # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ #
+ #><#
+/*!
+ * \file rest_srr_save_POST.ecpp
+ * \author Xavier Millieret <XavierMillieret@Eaton.com>
+ * \brief Implementation of POST save operations.
+ */
+ #><%pre>
+
+#include <string>
+#include <fstream>
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+
+#include <fty_common_rest_helpers.h>
+#include <fty_common.h>
+#include <fty_common_json.h>
+
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/jsondeserializer.h>
+
+#include "fty_common_rest_helpers.h"
+#include "fty-srr-rest.h"
+#include "fty_srr_dto.h"
+
+    /**
+    * Get IPM2 configuration data from an input list
+    *
+    */
+   static std::string saveIpm2Configuration(const std::string &inputData)
+   { 
+       dto::srr::SrrQueryDto query(SAVE_ACTION, inputData);
+       messagebus::UserData reqData;
+       reqData << query;
+       messagebus::UserData respData = sendRequest(SAVE_ACTION, reqData);
+
+       return respData.front();
+   }
+
+
+</%pre>
+<%request scope="global">
+UserInfo user;
+//std::string gaccess_token;
+</%request>
+<%cpp>
+
+    // check user permissions
+    static const std::map <BiosProfile, std::string> PERMISSIONS = {
+            {BiosProfile::Admin, "C"}
+    };
+
+    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+  
+    std::string ipm2Config = saveIpm2Configuration(request.getBody());
+    
+    // Output serialization
+    cxxtools::SerializationInfo siResp;
+    JSON::readFromString (ipm2Config, siResp);
+
+    cxxtools::JsonSerializer serializer(reply.out());
+    serializer.serialize(siResp).finish();
+
+</%cpp>

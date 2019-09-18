@@ -1,0 +1,27 @@
+    <!-- GET features list available for SRR -->
+    <mapping>
+      <target>rest_srr_GET@libfty_srr_rest</target>
+      <url>^/api/v1/admin/srr/features$</url>
+      <method>GET</method>
+    </mapping>
+
+    <!-- Save action -->
+    <mapping>
+      <target>rest_srr_save_POST@libfty_srr_rest</target>
+      <url>^/api/v1/admin/srr/save$</url>
+      <method>POST</method>
+    </mapping>
+    
+    <!-- Restore action -->
+    <mapping>
+      <target>rest_srr_restore_POST@libfty_srr_rest</target>
+      <url>^/api/v1/admin/srr/restore$</url>
+      <method>POST</method>
+    </mapping>
+    
+    <!-- Reset action -->
+    <mapping>
+      <target>rest_srr_reset_POST@libfty_srr_rest</target>
+      <url>^/api/v1/admin/srr/reset$</url>
+      <method>POST</method>
+    </mapping>
