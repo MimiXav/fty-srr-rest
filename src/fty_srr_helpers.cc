@@ -41,7 +41,9 @@ messagebus::UserData sendRequest(const std::string& subject, const messagebus::U
     {
         // Client id
         std::string clientId = messagebus::getClientId(AGENT_NAME);
-        std::unique_ptr<messagebus::MessageBus> requester(messagebus::connect(END_POINT, clientId));
+        std::unique_ptr<messagebus::MessageBus> requester(messagebus::MlmMessageBus(END_POINT, clientId));
+        requester->connect();
+        
         // Build message
         messagebus::Message msg;
         msg.userData() = userData;

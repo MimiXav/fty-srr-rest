@@ -34,7 +34,7 @@
 #define DEFAULT_TIME_OUT                5
 
 // Action definition
-#define GET_ACTION                      "get"
+#define GET_ACTION                      "getFeatureList"
 #define SAVE_ACTION                     "save"
 #define RESTORE_ACTION                  "restore"
 #define RESET_ACTION                    "reset"
