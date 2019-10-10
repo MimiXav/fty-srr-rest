@@ -67,30 +67,36 @@ UserInfo user;
     };
 
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
-
-    // Restore IPM2 configuration data.
-    dto::srr::SrrResponseDtoList responseDto = restoreIpm2Configuration(request.getBody());
-    log_debug("Restore response global status: '%s'", responseDto.status.c_str());
     
-    // Output serialization
-    cxxtools::SerializationInfo siResp;
-    siResp.addMember(SAVE_STATUS) <<= responseDto.status;
-    
-    cxxtools::SerializationInfo siStatusList;
-    siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
-    siStatusList.setName(SAVE_STATUS_LIST);
-
-    for (const auto& resp : responseDto.responseList)
+    try
     {
-        cxxtools::SerializationInfo siTemp;
-        siTemp.addMember(FEATURE_NAME) <<= resp.name;
-        siTemp.addMember(SAVE_STATUS) <<= resp.status;
-        siTemp.addMember(SAVE_ERROR) <<= resp.error;
-        siStatusList.addMember("") <<= siTemp;
-    }
-    siResp.addMember("") <<= siStatusList;
+        // Restore IPM2 configuration data.
+        dto::srr::SrrResponseDtoList responseDto = restoreIpm2Configuration(request.getBody());
+        log_debug("Restore response global status: '%s'", responseDto.status.c_str());
 
-    cxxtools::JsonSerializer serializer(reply.out());
-    serializer.serialize(siResp).finish();
+        // Output serialization
+        cxxtools::SerializationInfo siResp;
+        siResp.addMember(SAVE_STATUS) <<= responseDto.status;
+
+        cxxtools::SerializationInfo siStatusList;
+        siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
+        siStatusList.setName(SAVE_STATUS_LIST);
+
+        for (const auto& resp : responseDto.responseList)
+        {
+            cxxtools::SerializationInfo siTemp;
+            siTemp.addMember(FEATURE_NAME) <<= resp.name;
+            siTemp.addMember(SAVE_STATUS) <<= resp.status;
+            siTemp.addMember(SAVE_ERROR) <<= resp.error;
+            siStatusList.addMember("") <<= siTemp;
+        }
+        siResp.addMember("") <<= siStatusList;
+        cxxtools::JsonSerializer serializer(reply.out());
+        serializer.serialize(siResp).finish();
+    }
+    catch (std::runtime_error& ex)
+    {
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on restore IPM2").c_str());
+    }
     
 </%cpp>

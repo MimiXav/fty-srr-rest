@@ -54,7 +54,6 @@ static dto::srr::SrrFeaturesListDto getFeatureListManaged()
     respData >> featuresListDto;
 
     return featuresListDto;
-    
 }
 
 </%pre>
@@ -69,21 +68,30 @@ UserInfo user;
     };
 
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
-
-    dto::srr::SrrFeaturesListDto featuresListDto = getFeatureListManaged();
     
-    // Build the json result
-    cxxtools::SerializationInfo jsonResp;
-    jsonResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
-    cxxtools::SerializationInfo& siFeaturesList = jsonResp.addMember(FEATURE_LIST_NAME);
-    siFeaturesList.setCategory(cxxtools::SerializationInfo::Category::Array);
-
-    for (const auto& featureName : featuresListDto.featuresList)
+    try
     {
-        cxxtools::SerializationInfo siTemp;
-        siTemp.addMember(FEATURE_NAME) <<= featureName;
-        siFeaturesList.addMember("") <<= siTemp;
+        // Get the feature list managed
+        dto::srr::SrrFeaturesListDto featuresListDto = getFeatureListManaged();
+
+        // Build the json result
+        cxxtools::SerializationInfo jsonResp;
+        jsonResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
+        cxxtools::SerializationInfo& siFeaturesList = jsonResp.addMember(FEATURE_LIST_NAME);
+        siFeaturesList.setCategory(cxxtools::SerializationInfo::Category::Array);
+
+        for (const auto& featureName : featuresListDto.featuresList)
+        {
+            cxxtools::SerializationInfo siTemp;
+            siTemp.addMember(FEATURE_NAME) <<= featureName;
+            siFeaturesList.addMember("") <<= siTemp;
+        }
+        cxxtools::JsonSerializer serializer(reply.out());
+        serializer.serialize(jsonResp).finish();
     }
-    cxxtools::JsonSerializer serializer(reply.out());
-    serializer.serialize(jsonResp).finish();
+    catch (std::runtime_error& ex)
+    {
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on get feature list managed").c_str());
+    }
+        
 </%cpp>

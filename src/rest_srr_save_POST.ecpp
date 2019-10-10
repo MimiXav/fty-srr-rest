@@ -42,7 +42,7 @@
 #include "fty-srr-rest.h"
 #include "fty_srr_dto.h"
 
-    /**
+   /**
     * Get IPM2 configuration data from an input list
     *
     */
@@ -52,7 +52,6 @@
        messagebus::UserData reqData;
        reqData << query;
        messagebus::UserData respData = sendRequest(SAVE_ACTION, reqData);
-
        return respData.front();
    }
 
@@ -71,13 +70,19 @@ UserInfo user;
 
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
   
-    std::string ipm2Config = saveIpm2Configuration(request.getBody());
-    
-    // Output serialization
-    cxxtools::SerializationInfo siResp;
-    JSON::readFromString (ipm2Config, siResp);
+    try
+    {
+        std::string ipm2Config = saveIpm2Configuration(request.getBody());
+        // Output serialization
+        cxxtools::SerializationInfo siResp;
+        JSON::readFromString (ipm2Config, siResp);
 
-    cxxtools::JsonSerializer serializer(reply.out());
-    serializer.serialize(siResp).finish();
+        cxxtools::JsonSerializer serializer(reply.out());
+        serializer.serialize(siResp).finish();
+    }
+    catch (std::runtime_error& ex)
+    {
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on save IPM2").c_str());
+    }
 
 </%cpp>
