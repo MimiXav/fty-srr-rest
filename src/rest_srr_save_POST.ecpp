@@ -39,20 +39,27 @@
 #include <cxxtools/jsondeserializer.h>
 
 #include "fty_common_rest_helpers.h"
-#include "fty-srr-rest.h"
+#include "fty_srr_rest_classes.h"
 #include "fty_srr_dto.h"
 
    /**
     * Get IPM2 configuration data from an input list
     *
     */
-   static std::string saveIpm2Configuration(const std::string &inputData)
-   { 
-       dto::srr::SrrQueryDto query(SAVE_ACTION, inputData);
-       messagebus::UserData reqData;
-       reqData << query;
-       messagebus::UserData respData = sendRequest(SAVE_ACTION, reqData);
-       return respData.front();
+   static dto::srr::SrrSaveDto saveIpm2Configuration(const std::string &inputData)
+   {
+        dto::srr::SrrSaveDto respDto(STATUS_FAILED);
+  
+        dto::srr::SrrQueryDto query(SAVE_ACTION, inputData);
+        messagebus::UserData reqData;
+        reqData << query;
+        messagebus::UserData respData = sendRequest(SAVE_ACTION, reqData);
+        if (!respData.empty())
+        {
+            respDto.status = STATUS_SUCCESS;
+            respDto.config = respData.front();
+        }
+        return respDto;
    }
 
 
@@ -72,10 +79,17 @@ UserInfo user;
   
     try
     {
-        std::string ipm2Config = saveIpm2Configuration(request.getBody());
+        dto::srr::SrrSaveDto respDto = saveIpm2Configuration(request.getBody());
+        
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        JSON::readFromString (ipm2Config, siResp);
+        siResp.addMember(SAVE_STATUS) <<= respDto.status;
+        
+        // Output serialization
+        cxxtools::SerializationInfo siConfig;
+        JSON::readFromString (respDto.config, siConfig);
+        siConfig.setName(CONFIGURATION);
+        siResp.addMember("") <<= siConfig;
 
         cxxtools::JsonSerializer serializer(reply.out());
         serializer.serialize(siResp).finish();

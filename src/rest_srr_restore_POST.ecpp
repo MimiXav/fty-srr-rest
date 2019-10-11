@@ -42,17 +42,21 @@
  * Restore IPM2 configuration data
  *
  */
-static dto::srr::SrrResponseDtoList restoreIpm2Configuration(const std::string& inputData)
+static dto::srr::SrrRestoreDtoList restoreIpm2Configuration(const std::string& inputData)
 {
-    dto::srr::SrrResponseDtoList responseDto;
-    
+    // Default status
+    dto::srr::SrrRestoreDtoList respDto(STATUS_FAILED);
+    // Build query
     dto::srr::SrrQueryDto query(RESTORE_ACTION, inputData);
     messagebus::UserData reqData;
     reqData << query;
+    // Send request
     messagebus::UserData respData = sendRequest(RESTORE_ACTION, reqData);
-    respData >> responseDto;
-    
-    return responseDto;
+    if (!respData.empty())
+    {
+        respData >> respDto;
+    }
+    return respDto;
 }
 
 </%pre>
@@ -71,18 +75,17 @@ UserInfo user;
     try
     {
         // Restore IPM2 configuration data.
-        dto::srr::SrrResponseDtoList responseDto = restoreIpm2Configuration(request.getBody());
-        log_debug("Restore response global status: '%s'", responseDto.status.c_str());
-
+        dto::srr::SrrRestoreDtoList respDto = restoreIpm2Configuration(request.getBody());
+        
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        siResp.addMember(SAVE_STATUS) <<= responseDto.status;
+        siResp.addMember(SAVE_STATUS) <<= respDto.status;
 
         cxxtools::SerializationInfo siStatusList;
         siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
         siStatusList.setName(SAVE_STATUS_LIST);
 
-        for (const auto& resp : responseDto.responseList)
+        for (const auto& resp : respDto.responseList)
         {
             cxxtools::SerializationInfo siTemp;
             siTemp.addMember(FEATURE_NAME) <<= resp.name;
@@ -91,6 +94,7 @@ UserInfo user;
             siStatusList.addMember("") <<= siTemp;
         }
         siResp.addMember("") <<= siStatusList;
+        
         cxxtools::JsonSerializer serializer(reply.out());
         serializer.serialize(siResp).finish();
     }

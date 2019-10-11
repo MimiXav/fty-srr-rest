@@ -46,6 +46,11 @@
 #define FEATURE_NAME                    "name"
 #define SAVE_STATUS                     "status"
 #define SAVE_STATUS_LIST                "statusList"
+#define CONFIGURATION                   "configuration"
 #define SAVE_ERROR                      "error"
+
+// Status definition
+#define STATUS_SUCCESS                  "success"
+#define STATUS_FAILED                   "failed"
 
 #endif
