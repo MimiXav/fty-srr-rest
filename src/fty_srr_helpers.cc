@@ -36,33 +36,22 @@
  */
 messagebus::UserData sendRequest(const std::string& subject, const messagebus::UserData& userData)
 {
-    messagebus::UserData response;
-    try
-    {
-        // Client id
-        std::string clientId = messagebus::getClientId(AGENT_NAME);
-        std::unique_ptr<messagebus::MessageBus> requester(messagebus::MlmMessageBus(END_POINT, clientId));
-        requester->connect();
-        
-        // Build message
-        messagebus::Message msg;
-        msg.userData() = userData;
-        msg.metaData().emplace(messagebus::Message::SUBJECT, subject);
-        msg.metaData().emplace(messagebus::Message::FROM, clientId);
-        msg.metaData().emplace(messagebus::Message::TO, AGENT_NAME_REQUEST_DESTINATION);
-        msg.metaData().emplace(messagebus::Message::COORELATION_ID, messagebus::generateUuid());
-        // Send request
-        messagebus::Message resp = requester->request(MSG_QUEUE_NAME, msg, DEFAULT_TIME_OUT);
-        response = resp.userData();
-    }
-    catch (messagebus::MessageBusException& ex)
-    {
-        log_error("Message bus exception %s", ex.what());
-    }
-    catch (...)
-    {
-        log_error("Unknown exception to get feature list managed");
-    }
-    return response;
+    // Client id
+    std::string clientId = messagebus::getClientId(AGENT_NAME);
+    std::unique_ptr<messagebus::MessageBus> requester(messagebus::MlmMessageBus(END_POINT, clientId));
+    requester->connect();
+
+    // Build message
+    messagebus::Message msg;
+    msg.userData() = userData;
+    msg.metaData().emplace(messagebus::Message::SUBJECT, subject);
+    msg.metaData().emplace(messagebus::Message::FROM, clientId);
+    msg.metaData().emplace(messagebus::Message::TO, AGENT_NAME_REQUEST_DESTINATION);
+    msg.metaData().emplace(messagebus::Message::COORELATION_ID, messagebus::generateUuid());
+    // Send request
+    messagebus::Message resp = requester->request(MSG_QUEUE_NAME, msg, DEFAULT_TIME_OUT);
+    messagebus::UserData resp = resp.userData();
+
+    return resp;
 }
 

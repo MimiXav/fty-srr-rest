@@ -48,11 +48,13 @@
     */
    static dto::srr::SrrSaveDto saveIpm2Configuration(const std::string &inputData)
    {
+        // Default status
         dto::srr::SrrSaveDto respDto(STATUS_FAILED);
-  
+        // Build query
         dto::srr::SrrQueryDto query(SAVE_ACTION, inputData);
         messagebus::UserData reqData;
         reqData << query;
+        // Send request
         messagebus::UserData respData = sendRequest(SAVE_ACTION, reqData);
         if (!respData.empty())
         {
