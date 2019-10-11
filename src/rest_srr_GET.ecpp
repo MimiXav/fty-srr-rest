@@ -52,7 +52,10 @@ static dto::srr::SrrFeaturesListDto getFeatureListManaged()
     reqData << query;
     messagebus::UserData respData = sendRequest(GET_ACTION, reqData);
     respData >> featuresListDto;
-
+    if (!respData.empty())
+    {
+        respData >> featuresListDto;
+    }
     return featuresListDto;
 }
 
