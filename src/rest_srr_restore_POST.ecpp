@@ -1,0 +1,106 @@
+<#
+ #
+ # Copyright (C) 2018 Eaton
+ #
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License along
+ # with this program; if not, write to the Free Software Foundation, Inc.,
+ # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ #
+ #><#
+/*!
+ * \file rest_srr_save_POST.ecpp
+ * \author Xavier Millieret <XavierMillieret@Eaton.com>
+ * \brief Implementation of POST save operations.
+ */
+ #><%pre>
+
+#include <string>
+#include <fstream>
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/regex.h>
+#include <fty_common_messagebus.h>
+
+#include "fty_common_rest_helpers.h"
+#include "fty_srr_rest_classes.h"
+#include "fty_srr_dto.h"
+
+/**
+ * Restore IPM2 configuration data
+ *
+ */
+static dto::srr::SrrRestoreDtoList restoreIpm2Configuration(const std::string& inputData)
+{
+    // Default status
+    dto::srr::SrrRestoreDtoList respDto(STATUS_FAILED);
+    // Build query
+    dto::srr::SrrQueryDto query(RESTORE_ACTION, inputData);
+    messagebus::UserData reqData;
+    reqData << query;
+    // Send request
+    messagebus::UserData respData = sendRequest(RESTORE_ACTION, reqData);
+    if (!respData.empty())
+    {
+        respData >> respDto;
+    }
+    return respDto;
+}
+
+</%pre>
+<%request scope="global">
+UserInfo user;
+//std::string gaccess_token;
+</%request>
+<%cpp>
+    // check user permissions
+    static const std::map <BiosProfile, std::string> PERMISSIONS = {
+            {BiosProfile::Admin, "C"}
+    };
+
+    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+    
+    try
+    {
+        // Restore IPM2 configuration data.
+        dto::srr::SrrRestoreDtoList respDto = restoreIpm2Configuration(request.getBody());
+        
+        // Output serialization
+        cxxtools::SerializationInfo siResp;
+        siResp.addMember(SAVE_STATUS) <<= respDto.status;
+
+        cxxtools::SerializationInfo siStatusList;
+        siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
+        siStatusList.setName(SAVE_STATUS_LIST);
+
+        for (const auto& resp : respDto.responseList)
+        {
+            cxxtools::SerializationInfo siTemp;
+            siTemp.addMember(FEATURE_NAME) <<= resp.name;
+            siTemp.addMember(SAVE_STATUS) <<= resp.status;
+            siTemp.addMember(SAVE_ERROR) <<= resp.error;
+            siStatusList.addMember("") <<= siTemp;
+        }
+        siResp.addMember("") <<= siStatusList;
+        
+        cxxtools::JsonSerializer serializer(reply.out());
+        serializer.serialize(siResp).finish();
+    }
+    catch (std::runtime_error& ex)
+    {
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on restore IPM2").c_str());
+    }
+    
+</%cpp>
