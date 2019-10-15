@@ -220,74 +220,6 @@ ELSE (CZMQ_FOUND)
 ENDIF (CZMQ_FOUND)
 
 ########################################################################
-# MALAMUTE dependency
-########################################################################
-find_package(malamute REQUIRED)
-IF (MALAMUTE_FOUND)
-    include_directories(${MALAMUTE_INCLUDE_DIRS})
-    list(APPEND MORE_LIBRARIES ${MALAMUTE_LIBRARIES})
-  IF (PC_MALAMUTE_FOUND)
-      set(pkg_config_names_private "${pkg_config_names_private} libmlm >= 1.0.0")
-      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_MALAMUTE_STATIC_LDFLAGS})
-  ELSE (PC_MALAMUTE_FOUND)
-      set(pkg_config_libs_private "${pkg_config_libs_private} -lmlm")
-  ENDIF (PC_MALAMUTE_FOUND)
-ELSE (MALAMUTE_FOUND)
-    message( FATAL_ERROR "malamute not found." )
-ENDIF (MALAMUTE_FOUND)
-
-########################################################################
-# OPENSSL dependency
-########################################################################
-find_package(openssl REQUIRED)
-IF (OPENSSL_FOUND)
-    include_directories(${OPENSSL_INCLUDE_DIRS})
-    list(APPEND MORE_LIBRARIES ${OPENSSL_LIBRARIES})
-  IF (PC_OPENSSL_FOUND)
-      set(pkg_config_names_private "${pkg_config_names_private} openssl")
-      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_OPENSSL_STATIC_LDFLAGS})
-  ELSE (PC_OPENSSL_FOUND)
-      set(pkg_config_libs_private "${pkg_config_libs_private} -lopenssl")
-  ENDIF (PC_OPENSSL_FOUND)
-ELSE (OPENSSL_FOUND)
-    message( FATAL_ERROR "openssl not found." )
-ENDIF (OPENSSL_FOUND)
-
-########################################################################
-# FTY-COMMON dependency
-########################################################################
-find_package(fty-common REQUIRED)
-IF (FTY-COMMON_FOUND)
-    include_directories(${FTY-COMMON_INCLUDE_DIRS})
-    list(APPEND MORE_LIBRARIES ${FTY-COMMON_LIBRARIES})
-  IF (PC_FTY-COMMON_FOUND)
-      set(pkg_config_names_private "${pkg_config_names_private} libfty_common")
-      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_FTY-COMMON_STATIC_LDFLAGS})
-  ELSE (PC_FTY-COMMON_FOUND)
-      set(pkg_config_libs_private "${pkg_config_libs_private} -lfty-common")
-  ENDIF (PC_FTY-COMMON_FOUND)
-ELSE (FTY-COMMON_FOUND)
-    message( FATAL_ERROR "fty-common not found." )
-ENDIF (FTY-COMMON_FOUND)
-
-########################################################################
-# FTY-COMMON-MESSAGEBUS dependency
-########################################################################
-find_package(fty-common-messagebus REQUIRED)
-IF (FTY-COMMON-MESSAGEBUS_FOUND)
-    include_directories(${FTY-COMMON-MESSAGEBUS_INCLUDE_DIRS})
-    list(APPEND MORE_LIBRARIES ${FTY-COMMON-MESSAGEBUS_LIBRARIES})
-  IF (PC_FTY-COMMON-MESSAGEBUS_FOUND)
-      set(pkg_config_names_private "${pkg_config_names_private} libfty_common_messagebus")
-      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_FTY-COMMON-MESSAGEBUS_STATIC_LDFLAGS})
-  ELSE (PC_FTY-COMMON-MESSAGEBUS_FOUND)
-      set(pkg_config_libs_private "${pkg_config_libs_private} -lfty-common-messagebus")
-  ENDIF (PC_FTY-COMMON-MESSAGEBUS_FOUND)
-ELSE (FTY-COMMON-MESSAGEBUS_FOUND)
-    message( FATAL_ERROR "fty-common-messagebus not found." )
-ENDIF (FTY-COMMON-MESSAGEBUS_FOUND)
-
-########################################################################
 # TNTNET dependency
 ########################################################################
 find_package(tntnet REQUIRED)
@@ -320,6 +252,23 @@ IF (LIBSASL2_FOUND)
 ELSE (LIBSASL2_FOUND)
     message( FATAL_ERROR "libsasl2 not found." )
 ENDIF (LIBSASL2_FOUND)
+
+########################################################################
+# FTY-COMMON dependency
+########################################################################
+find_package(fty-common REQUIRED)
+IF (FTY-COMMON_FOUND)
+    include_directories(${FTY-COMMON_INCLUDE_DIRS})
+    list(APPEND MORE_LIBRARIES ${FTY-COMMON_LIBRARIES})
+  IF (PC_FTY-COMMON_FOUND)
+      set(pkg_config_names_private "${pkg_config_names_private} libfty_common")
+      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_FTY-COMMON_STATIC_LDFLAGS})
+  ELSE (PC_FTY-COMMON_FOUND)
+      set(pkg_config_libs_private "${pkg_config_libs_private} -lfty-common")
+  ENDIF (PC_FTY-COMMON_FOUND)
+ELSE (FTY-COMMON_FOUND)
+    message( FATAL_ERROR "fty-common not found." )
+ENDIF (FTY-COMMON_FOUND)
 
 ########################################################################
 # TNTDB dependency
@@ -371,6 +320,40 @@ IF (FTY-COMMON-REST_FOUND)
 ELSE (FTY-COMMON-REST_FOUND)
     message( FATAL_ERROR "fty-common-rest not found." )
 ENDIF (FTY-COMMON-REST_FOUND)
+
+########################################################################
+# FTY-COMMON-MESSAGEBUS dependency
+########################################################################
+find_package(fty-common-messagebus REQUIRED)
+IF (FTY-COMMON-MESSAGEBUS_FOUND)
+    include_directories(${FTY-COMMON-MESSAGEBUS_INCLUDE_DIRS})
+    list(APPEND MORE_LIBRARIES ${FTY-COMMON-MESSAGEBUS_LIBRARIES})
+  IF (PC_FTY-COMMON-MESSAGEBUS_FOUND)
+      set(pkg_config_names_private "${pkg_config_names_private} libfty_common_messagebus")
+      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_FTY-COMMON-MESSAGEBUS_STATIC_LDFLAGS})
+  ELSE (PC_FTY-COMMON-MESSAGEBUS_FOUND)
+      set(pkg_config_libs_private "${pkg_config_libs_private} -lfty-common-messagebus")
+  ENDIF (PC_FTY-COMMON-MESSAGEBUS_FOUND)
+ELSE (FTY-COMMON-MESSAGEBUS_FOUND)
+    message( FATAL_ERROR "fty-common-messagebus not found." )
+ENDIF (FTY-COMMON-MESSAGEBUS_FOUND)
+
+########################################################################
+# FTY-COMMON-DTO dependency
+########################################################################
+find_package(fty-common-dto REQUIRED)
+IF (FTY-COMMON-DTO_FOUND)
+    include_directories(${FTY-COMMON-DTO_INCLUDE_DIRS})
+    list(APPEND MORE_LIBRARIES ${FTY-COMMON-DTO_LIBRARIES})
+  IF (PC_FTY-COMMON-DTO_FOUND)
+      set(pkg_config_names_private "${pkg_config_names_private} libfty_common_dto")
+      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_FTY-COMMON-DTO_STATIC_LDFLAGS})
+  ELSE (PC_FTY-COMMON-DTO_FOUND)
+      set(pkg_config_libs_private "${pkg_config_libs_private} -lfty-common-dto")
+  ENDIF (PC_FTY-COMMON-DTO_FOUND)
+ELSE (FTY-COMMON-DTO_FOUND)
+    message( FATAL_ERROR "fty-common-dto not found." )
+ENDIF (FTY-COMMON-DTO_FOUND)
 
 ########################################################################
 # version
@@ -577,15 +560,14 @@ target_link_libraries(
     ${LIBSODIUM_LIBRARIES}
     ${LIBZMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
-    ${MALAMUTE_LIBRARIES}
-    ${OPENSSL_LIBRARIES}
-    ${FTY-COMMON_LIBRARIES}
-    ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
     ${TNTNET_LIBRARIES}
     ${LIBSASL2_LIBRARIES}
+    ${FTY-COMMON_LIBRARIES}
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
     ${FTY-COMMON-REST_LIBRARIES}
+    ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
+    ${FTY-COMMON-DTO_LIBRARIES}
     ${OPTIONAL_LIBRARIES}
 )
 endif()
@@ -599,15 +581,14 @@ target_link_libraries(
     ${LIBSODIUM_LIBRARIES}
     ${LIBZMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
-    ${MALAMUTE_LIBRARIES}
-    ${OPENSSL_LIBRARIES}
-    ${FTY-COMMON_LIBRARIES}
-    ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
     ${TNTNET_LIBRARIES}
     ${LIBSASL2_LIBRARIES}
+    ${FTY-COMMON_LIBRARIES}
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
     ${FTY-COMMON-REST_LIBRARIES}
+    ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
+    ${FTY-COMMON-DTO_LIBRARIES}
     ${OPTIONAL_LIBRARIES}
     ${OPTIONAL_LIBRARIES_STATIC}
 )
