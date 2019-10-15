@@ -50,8 +50,7 @@ messagebus::UserData sendRequest(const std::string& subject, const messagebus::U
     msg.metaData().emplace(messagebus::Message::COORELATION_ID, messagebus::generateUuid());
     // Send request
     messagebus::Message resp = requester->request(MSG_QUEUE_NAME, msg, DEFAULT_TIME_OUT);
-    messagebus::UserData resp = resp.userData();
-
-    return resp;
+    // Return the data response
+    return resp.userData();
 }
 
