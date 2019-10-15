@@ -20,6 +20,7 @@ git clone --quiet --depth 1 -b master https://github.com/42ity/fty-common.git ft
 git clone --quiet --depth 1 -b 1.3-FTY-master https://github.com/42ity/tntdb.git tntdb
 git clone --quiet --depth 1 -b master https://github.com/42ity/fty-common-db.git fty-common-db
 git clone --quiet --depth 1 -b master https://github.com/42ity/fty-common-rest.git fty-common-rest
+git clone --quiet --depth 1 -b 1.0-FTY-master https://github.com/42ity/malamute.git malamute
 git clone --quiet --depth 1 -b master https://github.com/42ity/fty-common-messagebus.git fty-common-messagebus
 git clone --quiet --depth 1 -b master https://github.com/42ity/fty-common-dto.git fty-common-dto
 cd -

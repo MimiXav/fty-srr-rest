@@ -322,6 +322,23 @@ ELSE (FTY-COMMON-REST_FOUND)
 ENDIF (FTY-COMMON-REST_FOUND)
 
 ########################################################################
+# MALAMUTE dependency
+########################################################################
+find_package(malamute REQUIRED)
+IF (MALAMUTE_FOUND)
+    include_directories(${MALAMUTE_INCLUDE_DIRS})
+    list(APPEND MORE_LIBRARIES ${MALAMUTE_LIBRARIES})
+  IF (PC_MALAMUTE_FOUND)
+      set(pkg_config_names_private "${pkg_config_names_private} libmlm >= 1.0.0")
+      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_MALAMUTE_STATIC_LDFLAGS})
+  ELSE (PC_MALAMUTE_FOUND)
+      set(pkg_config_libs_private "${pkg_config_libs_private} -lmlm")
+  ENDIF (PC_MALAMUTE_FOUND)
+ELSE (MALAMUTE_FOUND)
+    message( FATAL_ERROR "malamute not found." )
+ENDIF (MALAMUTE_FOUND)
+
+########################################################################
 # FTY-COMMON-MESSAGEBUS dependency
 ########################################################################
 find_package(fty-common-messagebus REQUIRED)
@@ -566,6 +583,7 @@ target_link_libraries(
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
     ${FTY-COMMON-REST_LIBRARIES}
+    ${MALAMUTE_LIBRARIES}
     ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
     ${FTY-COMMON-DTO_LIBRARIES}
     ${OPTIONAL_LIBRARIES}
@@ -587,6 +605,7 @@ target_link_libraries(
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
     ${FTY-COMMON-REST_LIBRARIES}
+    ${MALAMUTE_LIBRARIES}
     ${FTY-COMMON-MESSAGEBUS_LIBRARIES}
     ${FTY-COMMON-DTO_LIBRARIES}
     ${OPTIONAL_LIBRARIES}

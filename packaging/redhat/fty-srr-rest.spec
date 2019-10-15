@@ -59,6 +59,7 @@ BuildRequires:  fty-common-devel
 BuildRequires:  tntdb-devel
 BuildRequires:  fty-common-db-devel
 BuildRequires:  fty-common-rest-devel
+BuildRequires:  malamute-devel >= 1.0.0
 BuildRequires:  fty-common-messagebus-devel
 BuildRequires:  fty-common-dto-devel
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -96,6 +97,7 @@ Requires:       fty-common-devel
 Requires:       tntdb-devel
 Requires:       fty-common-db-devel
 Requires:       fty-common-rest-devel
+Requires:       malamute-devel >= 1.0.0
 Requires:       fty-common-messagebus-devel
 Requires:       fty-common-dto-devel
 
