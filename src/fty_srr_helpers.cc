@@ -34,7 +34,7 @@
  * @param userData
  * @return The Reply or MessageBusException when a time out occurs.
  */
-messagebus::UserData sendRequest(const std::string& subject, const messagebus::UserData& userData)
+dto::UserData sendRequest(const std::string& subject, const dto::UserData& userData)
 {
     // Client id
     std::string clientId = messagebus::getClientId(AGENT_NAME);
