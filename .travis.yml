@@ -54,8 +54,6 @@ env:
 
 # Prerequisite packages provided by OS distro and used "as is"
 pkg_deps_prereqs_distro: &pkg_deps_prereqs_distro
-    - libssl-dev
-    - libsasl2-dev
 
 # Prerequisite packages that may be built from source or used from
 # prebuilt packages of that source (usually not from an OS distro)
@@ -66,13 +64,14 @@ pkg_deps_prereqs_source: &pkg_deps_prereqs_source
     - libsodium-dev
     - libzmq3-dev
     - libczmq-dev
-    - libmlm-dev
-    - libfty-common-dev
-    - libfty-common-mlm-dev
     - tntnet-dev
+    - libfty-common-dev
     - tntdb-dev
     - libfty-common-db-dev
     - libfty-common-rest-dev
+    - libmlm-dev
+    - libfty-common-messagebus-dev
+    - libfty-common-dto-dev
 
 # NOTE: Our forks are checked out and built without pkg dependencies in use
 pkg_deps_prereqs: &pkg_deps_prereqs
