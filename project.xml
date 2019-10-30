@@ -5,7 +5,7 @@
     email = "EatonIPCOpenSource@eaton.com"
     url = "https://42ity.org"
     license = "GPL-2.0+"
-    repository = "https://github.com/42ity/fty-scripts-rest"
+    repository = "https://github.com/42ity/fty-srr-rest"
     >
 
     <target name = "debian" />
@@ -99,7 +99,7 @@
             repository = "https://github.com/42ity/tntnet.git"
             release = "2.2-FTY-master"
             />
-
+            
         <use project = "libsasl2" header = "sasl/sasl.h"
             debian_name = "libsasl2-dev"
             redhat_name = "cyrus-sasl-devel"
