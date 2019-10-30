@@ -54,7 +54,6 @@ BuildRequires:  libsodium-devel
 BuildRequires:  zeromq-devel
 BuildRequires:  czmq-devel >= 3.0.2
 BuildRequires:  tntnet-devel
-BuildRequires:  cyrus-sasl-devel
 BuildRequires:  fty-common-devel
 BuildRequires:  tntdb-devel
 BuildRequires:  fty-common-db-devel
@@ -92,7 +91,6 @@ Requires:       libsodium-devel
 Requires:       zeromq-devel
 Requires:       czmq-devel >= 3.0.2
 Requires:       tntnet-devel
-Requires:       cyrus-sasl-devel
 Requires:       fty-common-devel
 Requires:       tntdb-devel
 Requires:       fty-common-db-devel

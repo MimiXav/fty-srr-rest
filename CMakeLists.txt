@@ -237,23 +237,6 @@ ELSE (TNTNET_FOUND)
 ENDIF (TNTNET_FOUND)
 
 ########################################################################
-# LIBSASL2 dependency
-########################################################################
-find_package(libsasl2 REQUIRED)
-IF (LIBSASL2_FOUND)
-    include_directories(${LIBSASL2_INCLUDE_DIRS})
-    list(APPEND MORE_LIBRARIES ${LIBSASL2_LIBRARIES})
-  IF (PC_LIBSASL2_FOUND)
-      set(pkg_config_names_private "${pkg_config_names_private} libsasl2")
-      list(APPEND OPTIONAL_LIBRARIES_STATIC ${PC_LIBSASL2_STATIC_LDFLAGS})
-  ELSE (PC_LIBSASL2_FOUND)
-      set(pkg_config_libs_private "${pkg_config_libs_private} -llibsasl2")
-  ENDIF (PC_LIBSASL2_FOUND)
-ELSE (LIBSASL2_FOUND)
-    message( FATAL_ERROR "libsasl2 not found." )
-ENDIF (LIBSASL2_FOUND)
-
-########################################################################
 # FTY-COMMON dependency
 ########################################################################
 find_package(fty-common REQUIRED)
@@ -578,7 +561,6 @@ target_link_libraries(
     ${LIBZMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
     ${TNTNET_LIBRARIES}
-    ${LIBSASL2_LIBRARIES}
     ${FTY-COMMON_LIBRARIES}
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
@@ -600,7 +582,6 @@ target_link_libraries(
     ${LIBZMQ_LIBRARIES}
     ${CZMQ_LIBRARIES}
     ${TNTNET_LIBRARIES}
-    ${LIBSASL2_LIBRARIES}
     ${FTY-COMMON_LIBRARIES}
     ${TNTDB_LIBRARIES}
     ${FTY-COMMON-DB_LIBRARIES}
