@@ -10,7 +10,7 @@ ECPPFILES= \
   rest_srr_restore_POST.ecpp \
   rest_srr_reset_POST.ecpp
 
-TNTLIB_BASENAME=libfty_scripts_rest
+TNTLIB_BASENAME=libfty_srr_rest
 TNTLIB_DIRNAME=$(prefix)/lib/bios
 
 ECPPCCFILES = $(ECPPFILES:.ecpp=.cc)
