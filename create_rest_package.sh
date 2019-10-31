@@ -80,8 +80,9 @@ EOF
 LAST_ECPP="ECPPFILES"
 for file in $(ls src/rest_*.ecpp 2> /dev/null)
 do
-    echo "  ${file} \\" >> src/Makemodule-local.am
-    LAST_ECPP=${file}
+    ECPP=$(basename ${file})
+    echo "  ${ECPP} \\" >> src/Makemodule-local.am
+    LAST_ECPP=${ECPP}
 done
 
 PACKAGE_NAME_WITH_UNDERSCORE=$(echo "${PACKAGE_NAME}" | sed 's/-/_/g')
