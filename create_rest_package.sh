@@ -20,7 +20,7 @@ Section: net
 Priority: optional
 Depends:
     lib${PACKAGE_NAME}1 (= \${binary:Version}),
-    \${misc:Depends\},
+    \${misc:Depends},
     tntnet-runtime,
     malamute,
     libfty-common1,

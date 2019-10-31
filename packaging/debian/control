@@ -96,7 +96,7 @@ Section: net
 Priority: optional
 Depends:
     libfty-srr-rest1 (= ${binary:Version}),
-    ${misc:Depends\},
+    ${misc:Depends},
     tntnet-runtime,
     malamute,
     libfty-common1,
