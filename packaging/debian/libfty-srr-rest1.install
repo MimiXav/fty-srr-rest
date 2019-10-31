@@ -1,7 +1,7 @@
 # Note: this file is customized after zproject generation, be sure to keep it
 # Note: this file was amended to include the .so symlink too
 # since tntnet shared object is not a typical library. Path is
-# e.g. /usr/lib/bios/libfty-srr-rest.so*
-usr/lib/bios/libfty-srr-rest.so*
-##usr/lib/*/libfty-srr-rest.so.*
+# e.g. /usr/lib/bios/libfty_srr_rest.so*
+usr/lib/bios/libfty_srr_rest.so*
+##usr/lib/*/libfty_srr_rest.so.*
 

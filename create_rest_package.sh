@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 PACKAGE_NAME=$(basename $(ls packaging/debian/*dsc.obs) | cut -d '.' -f1)
+PACKAGE_NAME_WITH_UNDERSCORE=$(echo "${PACKAGE_NAME}" | sed 's/-/_/g')
 
 #Update control file
 printf "Update control file... "
@@ -43,9 +44,21 @@ cat > packaging/debian/lib${PACKAGE_NAME}1.install <<EOF
 # Note: this file is customized after zproject generation, be sure to keep it
 # Note: this file was amended to include the .so symlink too
 # since tntnet shared object is not a typical library. Path is
-# e.g. /usr/lib/bios/lib${PACKAGE_NAME}.so*
-usr/lib/bios/lib${PACKAGE_NAME}.so*
-##usr/lib/*/lib${PACKAGE_NAME}.so.*
+# e.g. /usr/lib/bios/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so*
+usr/lib/bios/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so*
+##usr/lib/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so.*
+
+EOF
+cat > packaging/debian/lib${PACKAGE_NAME}-dev.install <<EOF
+# Note: this file is customized after zproject generation, be sure to keep it
+# Note: this file was amended to NOT include some files
+# since tntnet shared object is not a typical library
+# e.g. /usr/lib/x86_64-linux-gnu/pkgconfig/lib${PACKAGE_NAME_WITH_UNDERSCORE}.pc
+# Note that the .so symlink is delivered by main "library" package
+usr/include/*
+###usr/lib/*/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so
+usr/lib/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so
+usr/lib/*/pkgconfig/lib${PACKAGE_NAME_WITH_UNDERSCORE}.pc
 
 EOF
 printf "Ok\n"
@@ -84,8 +97,6 @@ do
     echo "  ${ECPP} \\" >> src/Makemodule-local.am
     LAST_ECPP=${ECPP}
 done
-
-PACKAGE_NAME_WITH_UNDERSCORE=$(echo "${PACKAGE_NAME}" | sed 's/-/_/g')
 
 cat >> src/Makemodule-local.am <<EOF
 
