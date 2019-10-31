@@ -24,8 +24,7 @@
  */
  #><%pre>
 
-#include <string>
-
+#include "fty_srr_rest_classes.h"
 
 </%pre>
 <%request scope="global">

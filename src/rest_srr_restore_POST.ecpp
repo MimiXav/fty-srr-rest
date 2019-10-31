@@ -24,19 +24,7 @@
  */
  #><%pre>
 
-#include <string>
-#include <fstream>
-
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <cxxtools/jsonserializer.h>
-#include <cxxtools/regex.h>
-#include <fty_common_messagebus.h>
-
-#include "fty_common_rest_helpers.h"
 #include "fty_srr_rest_classes.h"
-#include "fty_srr_dto.h"
 
 /**
  * Restore IPM2 configuration data
@@ -48,10 +36,10 @@ static dto::srr::SrrRestoreDtoList restoreIpm2Configuration(const std::string& i
     dto::srr::SrrRestoreDtoList respDto(STATUS_FAILED);
     // Build query
     dto::srr::SrrQueryDto query(RESTORE_ACTION, inputData);
-    messagebus::UserData reqData;
+    dto::UserData reqData;
     reqData << query;
     // Send request
-    messagebus::UserData respData = sendRequest(RESTORE_ACTION, reqData);
+    dto::UserData respData = sendRequest(RESTORE_ACTION, reqData);
     if (!respData.empty())
     {
         respData >> respDto;

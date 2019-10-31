@@ -30,6 +30,6 @@
  * @param userData User data to send
  * @return The Reply or MessageBusException when a time out occurs.
  */
-messagebus::UserData sendRequest(const std::string& subject, const messagebus::UserData& userData);
+dto::UserData sendRequest(const std::string& subject, const dto::UserData& userData);
 
 #endif

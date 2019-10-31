@@ -32,8 +32,9 @@
 //  External dependencies
 #include <cxxtools/allocator.h>
 #include <fty_log.h>
-#include <fty_common_messagebus.h>
 #include <fty_common_rest.h>
+#include <fty_common_messagebus.h>
+#include <fty_common_dto.h>
 
 //  FTY_SRR_REST version macros for compile-time API detection
 #define FTY_SRR_REST_VERSION_MAJOR 1

@@ -53,15 +53,15 @@ BuildRequires:  fty-common-logging-devel
 BuildRequires:  libsodium-devel
 BuildRequires:  zeromq-devel
 BuildRequires:  czmq-devel >= 3.0.2
-BuildRequires:  malamute-devel >= 1.0.0
-BuildRequires:  openssl-devel
-BuildRequires:  fty-common-devel
-BuildRequires:  fty-common-messagebus-devel
 BuildRequires:  tntnet-devel
 BuildRequires:  cyrus-sasl-devel
+BuildRequires:  fty-common-devel
 BuildRequires:  tntdb-devel
 BuildRequires:  fty-common-db-devel
 BuildRequires:  fty-common-rest-devel
+BuildRequires:  malamute-devel >= 1.0.0
+BuildRequires:  fty-common-messagebus-devel
+BuildRequires:  fty-common-dto-devel
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -91,15 +91,15 @@ Requires:       fty-common-logging-devel
 Requires:       libsodium-devel
 Requires:       zeromq-devel
 Requires:       czmq-devel >= 3.0.2
-Requires:       malamute-devel >= 1.0.0
-Requires:       openssl-devel
-Requires:       fty-common-devel
-Requires:       fty-common-messagebus-devel
 Requires:       tntnet-devel
 Requires:       cyrus-sasl-devel
+Requires:       fty-common-devel
 Requires:       tntdb-devel
 Requires:       fty-common-db-devel
 Requires:       fty-common-rest-devel
+Requires:       malamute-devel >= 1.0.0
+Requires:       fty-common-messagebus-devel
+Requires:       fty-common-dto-devel
 
 %description devel
 save, restore and reset rest api development tools

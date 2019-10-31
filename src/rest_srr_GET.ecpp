@@ -24,20 +24,7 @@
  */
  #><%pre>
 
-#include <string>
-#include <fstream>
-#include <memory>
-
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <cxxtools/jsonserializer.h>
-#include <cxxtools/regex.h>
-#include <fty_common_messagebus.h>
-
-#include "fty_common_rest_helpers.h"
 #include "fty_srr_rest_classes.h"
-#include "fty_srr_dto.h"
         
 /**
  * Get SRR capabilities.
@@ -48,9 +35,9 @@ static dto::srr::SrrFeaturesListDto getFeatureListManaged()
     dto::srr::SrrFeaturesListDto featuresListDto;
     
     dto::srr::SrrQueryDto query(GET_ACTION);
-    messagebus::UserData reqData;
+    dto::UserData reqData;
     reqData << query;
-    messagebus::UserData respData = sendRequest(GET_ACTION, reqData);
+    dto::UserData respData = sendRequest(GET_ACTION, reqData);
     respData >> featuresListDto;
     if (!respData.empty())
     {

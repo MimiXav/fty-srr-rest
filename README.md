@@ -4,11 +4,10 @@
 
 ## How to build
 
-To build fty-common-dto project run:
+To build fty-srr-rest project run:
 
 ```bash
 ./autogen.sh
 ./configure
 make
-make check # to run self-test
 ```
