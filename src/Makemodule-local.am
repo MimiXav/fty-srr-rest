@@ -1,14 +1,15 @@
 # Custom targets, not managed via zproject
+AM_CXXFLAGS += -fvisibility=hidden
 
-ECPPC=ecppc
+ECPPC ?= ecppc
 ECPPFLAGS = --nolog
-ECPPFLAGS_CPP=
+ECPPFLAGS_CPP = -I$(top_builddir)/include -I$(top_srcdir)/include -I$(top_builddir)/src -I$(top_srcdir)/src
 
 ECPPFILES= \
   rest_srr_GET.ecpp \
-  rest_srr_save_POST.ecpp \
+  rest_srr_reset_POST.ecpp \
   rest_srr_restore_POST.ecpp \
-  rest_srr_reset_POST.ecpp
+  rest_srr_save_POST.ecpp
 
 TNTLIB_BASENAME=libfty_srr_rest
 TNTLIB_DIRNAME=$(prefix)/lib/bios
