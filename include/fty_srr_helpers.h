@@ -38,6 +38,6 @@ dto::UserData sendRequest(const std::string& subject, const dto::UserData& userD
  * @param delimiter 
  * @return A list of string splited.
  */
-std::vector<std::string> split(const std::string input, const std::string delimiter);
+std::vector<std::string> splitString(const std::string input, const char delimiter);
 
 #endif

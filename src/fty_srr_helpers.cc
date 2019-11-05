@@ -60,18 +60,15 @@ dto::UserData sendRequest(const std::string& subject, const dto::UserData& userD
  * @param delimiter
  * @return A list of string splited.
  */
-std::vector<std::string> split (const std::string input, const std::string delimiter) 
+std::vector<std::string> splitString(const std::string input, const char delimiter) 
 {
-    size_t start = 0, end, delim_len = delimiter.length();
-    std::string token;
     std::vector<std::string> resultList;
-
-    while ((end = input.find (delimiter, start)) != std::string::npos) 
+    std::stringstream ss(input);
+    
+    std::string token;
+    while (std::getline(ss, token, delimiter)) 
     {
-        token = input.substr (start, end - start);
-        start = end + delim_len;
         resultList.push_back (token);
     }
-    resultList.push_back (input.substr (start));
     return resultList;
 }

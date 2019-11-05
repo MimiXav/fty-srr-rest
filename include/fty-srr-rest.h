@@ -48,7 +48,7 @@
 #define STATUS                          "status"
 #define STATUS_LIST                     "statusList"
 #define ERROR                           "error"
-#define STRING_DELIMITER                ";"
+#define STRING_DELIMITER                ';'
 
 // Status definition
 #define STATUS_SUCCESS                  "success"

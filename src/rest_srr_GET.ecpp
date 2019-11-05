@@ -82,7 +82,7 @@ UserInfo user;
             cxxtools::SerializationInfo siArray;
             siArray.setCategory(cxxtools::SerializationInfo::Category::Array);
             // Get all dependencies splited.
-            std::vector<std::string> dependenciesList = split(srrFeatureDto.dependencies, STRING_DELIMITER);
+            std::vector<std::string> dependenciesList = splitString(srrFeatureDto.dependencies, STRING_DELIMITER);
             for (const auto& dependency :dependenciesList)
             {
                 siArray.addMember("") <<= dependency;
