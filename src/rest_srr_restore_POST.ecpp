@@ -67,19 +67,19 @@ UserInfo user;
         
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        siResp.addMember(SAVE_STATUS) <<= respDto.status;
+        siResp.addMember(STATUS) <<= respDto.status;
 
         cxxtools::SerializationInfo siStatusList;
         siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
-        siStatusList.setName(SAVE_STATUS_LIST);
+        siStatusList.setName(STATUS_LIST);
 
         for (const auto& resp : respDto.responseList)
         {
-            cxxtools::SerializationInfo siTemp;
-            siTemp.addMember(FEATURE_NAME) <<= resp.name;
-            siTemp.addMember(SAVE_STATUS) <<= resp.status;
-            siTemp.addMember(SAVE_ERROR) <<= resp.error;
-            siStatusList.addMember("") <<= siTemp;
+            cxxtools::SerializationInfo siFeature;
+            siFeature.addMember(FEATURE_NAME) <<= resp.name;
+            siFeature.addMember(STATUS) <<= resp.status;
+            siFeature.addMember(ERROR) <<= resp.error;
+            siStatusList.addMember("") <<= siFeature;
         }
         siResp.addMember("") <<= siStatusList;
         
@@ -92,3 +92,4 @@ UserInfo user;
     }
     
 </%cpp>
+        
