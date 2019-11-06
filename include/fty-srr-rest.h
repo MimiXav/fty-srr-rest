@@ -44,10 +44,11 @@
 #define ACTIVE_VERSION                  "1.0"
 #define FEATURE_LIST_NAME               "featuresList"
 #define FEATURE_NAME                    "name"
-#define SAVE_STATUS                     "status"
-#define SAVE_STATUS_LIST                "statusList"
-#define CONFIGURATION                   "configuration"
-#define SAVE_ERROR                      "error"
+#define DEPENDENCIES_NAME               "dependencies"
+#define STATUS                          "status"
+#define STATUS_LIST                     "statusList"
+#define ERROR                           "error"
+#define STRING_DELIMITER                ';'
 
 // Status definition
 #define STATUS_SUCCESS                  "success"

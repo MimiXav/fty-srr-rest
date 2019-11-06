@@ -25,7 +25,7 @@
  #><%pre>
 
 #include "fty_srr_rest_classes.h"
-        
+
 /**
  * Get SRR capabilities.
  *
@@ -61,23 +61,39 @@ UserInfo user;
     
     try
     {
-        // Get the feature list managed
+        // Get feature list managed
         dto::srr::SrrFeaturesListDto featuresListDto = getFeatureListManaged();
+        
+        // Output serialization
+        cxxtools::SerializationInfo siResp;
+        siResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
 
-        // Build the json result
-        cxxtools::SerializationInfo jsonResp;
-        jsonResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
-        cxxtools::SerializationInfo& siFeaturesList = jsonResp.addMember(FEATURE_LIST_NAME);
+        cxxtools::SerializationInfo siFeaturesList;
         siFeaturesList.setCategory(cxxtools::SerializationInfo::Category::Array);
+        siFeaturesList.setName(FEATURE_LIST_NAME);
 
-        for (const auto& featureName : featuresListDto.featuresList)
+        for (const auto& srrFeatureDto :featuresListDto.featuresList)
         {
-            cxxtools::SerializationInfo siTemp;
-            siTemp.addMember(FEATURE_NAME) <<= featureName;
-            siFeaturesList.addMember("") <<= siTemp;
+            cxxtools::SerializationInfo siFeature;
+            siFeature.addMember(FEATURE_NAME) <<= srrFeatureDto.name;
+            // Dependencies
+            cxxtools::SerializationInfo& siDependencies = siFeature.addMember(DEPENDENCIES_NAME);
+            // Dependcies array
+            cxxtools::SerializationInfo siArray;
+            siArray.setCategory(cxxtools::SerializationInfo::Category::Array);
+            // Get all dependencies splited.
+            std::vector<std::string> dependenciesList = splitString(srrFeatureDto.dependencies, STRING_DELIMITER);
+            for (const auto& dependency :dependenciesList)
+            {
+                siArray.addMember("") <<= dependency;
+            }
+            siDependencies <<= siArray;
+            siDependencies.setName(DEPENDENCIES_NAME);
+            siFeaturesList.addMember("") <<= siFeature;
         }
+        siResp.addMember("") <<= siFeaturesList;
         cxxtools::JsonSerializer serializer(reply.out());
-        serializer.serialize(jsonResp).finish();
+        serializer.serialize(siResp).finish();
     }
     catch (std::runtime_error& ex)
     {

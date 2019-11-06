@@ -54,3 +54,21 @@ dto::UserData sendRequest(const std::string& subject, const dto::UserData& userD
     return resp.userData();
 }
 
+/**
+ * Utility to split a string with a delimiter into a string vector.
+ * @param input string
+ * @param delimiter
+ * @return A list of string splited.
+ */
+std::vector<std::string> splitString(const std::string input, const char delimiter) 
+{
+    std::vector<std::string> resultList;
+    std::stringstream ss(input);
+    
+    std::string token;
+    while (std::getline(ss, token, delimiter)) 
+    {
+        resultList.push_back (token);
+    }
+    return resultList;
+}

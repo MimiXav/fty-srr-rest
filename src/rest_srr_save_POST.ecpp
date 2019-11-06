@@ -69,13 +69,7 @@ UserInfo user;
         
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        siResp.addMember(SAVE_STATUS) <<= respDto.status;
-        
-        // Output serialization
-        cxxtools::SerializationInfo siConfig;
-        JSON::readFromString (respDto.config, siConfig);
-        siConfig.setName(CONFIGURATION);
-        siResp.addMember("") <<= siConfig;
+        JSON::readFromString (respDto.config, siResp);
 
         cxxtools::JsonSerializer serializer(reply.out());
         serializer.serialize(siResp).finish();
@@ -86,3 +80,4 @@ UserInfo user;
     }
 
 </%cpp>
+        
