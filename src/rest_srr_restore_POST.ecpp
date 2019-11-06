@@ -24,7 +24,7 @@
  */
  #><%pre>
 
-#include "fty_srr_rest_classes.h"
+#include <src/fty_srr_rest_classes.h>
 
 /**
  * Restore IPM2 configuration data
