@@ -5,6 +5,6 @@
 # Note that the .so symlink is delivered by main "library" package
 usr/include/*
 ###usr/lib/*/*/libfty_srr_rest.so
-usr/lib/*/libfty_srr_rest.so
+###usr/lib/*/libfty_srr_rest.so
 usr/lib/*/pkgconfig/libfty_srr_rest.pc
 
