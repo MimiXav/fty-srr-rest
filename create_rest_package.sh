@@ -57,7 +57,7 @@ cat > packaging/debian/lib${PACKAGE_NAME}-dev.install <<EOF
 # Note that the .so symlink is delivered by main "library" package
 usr/include/*
 ###usr/lib/*/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so
-usr/lib/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so
+###usr/lib/*/lib${PACKAGE_NAME_WITH_UNDERSCORE}.so
 usr/lib/*/pkgconfig/lib${PACKAGE_NAME_WITH_UNDERSCORE}.pc
 
 EOF
