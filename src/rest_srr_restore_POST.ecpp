@@ -33,13 +33,13 @@
 static dto::srr::SrrRestoreDtoList restoreIpm2Configuration(const std::string& inputData)
 {
     // Default status
-    dto::srr::SrrRestoreDtoList respDto(STATUS_FAILED);
+    dto::srr::SrrRestoreDtoList respDto(dto::srr::Status::FAILED);
     // Build query
-    dto::srr::SrrQueryDto query(RESTORE_ACTION, inputData);
+    dto::srr::SrrQueryDto query(dto::srr::Action::RESTORE, inputData);
     dto::UserData reqData;
     reqData << query;
     // Send request
-    dto::UserData respData = sendRequest(RESTORE_ACTION, reqData);
+    dto::UserData respData = sendRequest(dto::srr::Action::RESTORE, reqData);
     if (!respData.empty())
     {
         respData >> respDto;
@@ -67,7 +67,7 @@ UserInfo user;
         
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        siResp.addMember(STATUS) <<= respDto.status;
+        siResp.addMember(STATUS) <<= statusToString(respDto.status);
 
         cxxtools::SerializationInfo siStatusList;
         siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
@@ -77,7 +77,7 @@ UserInfo user;
         {
             cxxtools::SerializationInfo siFeature;
             siFeature.addMember(FEATURE_NAME) <<= resp.name;
-            siFeature.addMember(STATUS) <<= resp.status;
+            siFeature.addMember(STATUS) <<= statusToString(resp.status);
             siFeature.addMember(ERROR) <<= resp.error;
             siStatusList.addMember("") <<= siFeature;
         }

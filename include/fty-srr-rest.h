@@ -33,12 +33,6 @@
 #define MSG_QUEUE_NAME                  "ETN.Q.IPMCORE.SRR"
 #define DEFAULT_TIME_OUT                5
 
-// Action definition
-#define GET_ACTION                      "getFeatureList"
-#define SAVE_ACTION                     "save"
-#define RESTORE_ACTION                  "restore"
-#define RESET_ACTION                    "reset"
-
 // Properties definition
 #define SRR_VERSION                     "version"
 #define ACTIVE_VERSION                  "1.0"
@@ -49,9 +43,5 @@
 #define STATUS_LIST                     "statusList"
 #define ERROR                           "error"
 #define STRING_DELIMITER                ';'
-
-// Status definition
-#define STATUS_SUCCESS                  "success"
-#define STATUS_FAILED                   "failed"
 
 #endif

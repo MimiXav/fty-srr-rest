@@ -34,10 +34,10 @@ static dto::srr::SrrFeaturesListDto getFeatureListManaged()
 {
     dto::srr::SrrFeaturesListDto featuresListDto;
     
-    dto::srr::SrrQueryDto query(GET_ACTION);
+    dto::srr::SrrQueryDto query(dto::srr::Action::GET_FEATURE_LIST);
     dto::UserData reqData;
     reqData << query;
-    dto::UserData respData = sendRequest(GET_ACTION, reqData);
+    dto::UserData respData = sendRequest(dto::srr::Action::GET_FEATURE_LIST, reqData);
     respData >> featuresListDto;
     if (!respData.empty())
     {
