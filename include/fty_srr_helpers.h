@@ -30,7 +30,7 @@
  * @param userData User data to send
  * @return The Reply or MessageBusException when a time out occurs.
  */
-dto::UserData sendRequest(const std::string& subject, const dto::UserData& userData);
+dto::UserData sendRequest(const dto::srr::Action action, const dto::UserData& userData);
 
 /**
  * Utility to split a string with a delimiter into a string vector.
