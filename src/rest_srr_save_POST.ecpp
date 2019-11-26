@@ -24,28 +24,38 @@
  */
  #><%pre>
 
+#include "srr_pb.h"
+        
 #include <src/fty_srr_rest_classes.h>
+
+using namespace dto::srr;
 
    /**
     * Get IPM2 configuration data from an input list
     *
     */
-   static dto::srr::SrrSaveDto saveIpm2Configuration(const std::string &inputData)
+   static SaveResponse saveIpm2Configuration(const std::string &inputData)
    {
         // Default status
-        dto::srr::SrrSaveDto respDto(dto::srr::Status::FAILED);
+        SaveResponse response();
+        
+       //dto::srr::SrrSaveDto respDto(dto::srr::Status::FAILED);
         // Build query
-        dto::srr::SrrQueryDto query(dto::srr::Action::SAVE, inputData);
+        //dto::srr::SrrQueryDto query(dto::srr::Action::SAVE, inputData);
+        Query query = saveQueryFromUiJson(inputData);
+        
         dto::UserData reqData;
         reqData << query;
         // Send request
-        dto::UserData respData = sendRequest(dto::srr::Action::SAVE, reqData);
+        //dto::UserData respData = sendRequest(dto::srr::Action::SAVE, reqData);
+        dto::UserData respData = sendRequest(/*dto::srr::Action::SAVE*/ "save", reqData);
         if (!respData.empty())
         {
-            respDto.status = dto::srr::Status::SUCCESS;
-            respDto.config = respData.front();
+//            respDto.status = dto::srr::Status::SUCCESS;
+//            respDto.config = respData.front();
+            //response <<= respData.front();
         }
-        return respDto;
+        //return response;
    }
 
 
@@ -61,15 +71,16 @@ UserInfo user;
             {BiosProfile::Admin, "C"}
     };
 
-    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+    //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
   
     try
     {
-        dto::srr::SrrSaveDto respDto = saveIpm2Configuration(request.getBody());
+        //dto::srr::SrrSaveDto respDto = saveIpm2Configuration(request.getBody());
+        SaveResponse reponse = saveIpm2Configuration(request.getBody());
         
         // Output serialization
         cxxtools::SerializationInfo siResp;
-        JSON::readFromString (respDto.config, siResp);
+        //JSON::readFromString (respDto.config, siResp);
 
         cxxtools::JsonSerializer serializer(reply.out());
         serializer.serialize(siResp).finish();
