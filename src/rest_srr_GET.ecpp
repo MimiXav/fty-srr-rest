@@ -26,24 +26,31 @@
 
 #include <src/fty_srr_rest_classes.h>
 
+using namespace dto::srr;
+
 /**
  * Get SRR capabilities.
  *
  */
-static dto::srr::SrrFeaturesListDto getFeatureListManaged()
+static std::string getFeatureListManaged()
 {
-    dto::srr::SrrFeaturesListDto featuresListDto;
-    
-    dto::srr::SrrQueryDto query(dto::srr::Action::GET_FEATURE_LIST);
-    dto::UserData reqData;
-    reqData << query;
-    dto::UserData respData = sendRequest(dto::srr::Action::GET_FEATURE_LIST, reqData);
-    respData >> featuresListDto;
-    if (!respData.empty())
-    {
-        respData >> featuresListDto;
-    }
-    return featuresListDto;
+     // Default status
+     Query query = createListFeatureQuery();
+
+     dto::UserData reqData;
+     reqData << query;
+
+     // Send request
+     dto::UserData respData = sendRequest("get", reqData);
+     if (respData.empty())
+     {
+        throw std::runtime_error("Impossible to get the list of features.");
+     }
+
+     Response response;
+     respData >> response;
+
+     return responseToUiJson(response);
 }
 
 </%pre>
@@ -57,47 +64,15 @@ UserInfo user;
             {BiosProfile::Admin, "R"}
     };
 
-    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+    //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
     
     try
-    {
-        // Get feature list managed
-        dto::srr::SrrFeaturesListDto featuresListDto = getFeatureListManaged();
-        
-        // Output serialization
-        cxxtools::SerializationInfo siResp;
-        siResp.addMember(SRR_VERSION) <<= ACTIVE_VERSION;
-
-        cxxtools::SerializationInfo siFeaturesList;
-        siFeaturesList.setCategory(cxxtools::SerializationInfo::Category::Array);
-        siFeaturesList.setName(FEATURE_LIST_NAME);
-
-        for (const auto& srrFeatureDto :featuresListDto.featuresList)
-        {
-            cxxtools::SerializationInfo siFeature;
-            siFeature.addMember(FEATURE_NAME) <<= srrFeatureDto.name;
-            // Dependencies
-            cxxtools::SerializationInfo& siDependencies = siFeature.addMember(DEPENDENCIES_NAME);
-            // Dependcies array
-            cxxtools::SerializationInfo siArray;
-            siArray.setCategory(cxxtools::SerializationInfo::Category::Array);
-            // Get all dependencies splited.
-            std::vector<std::string> dependenciesList = splitString(srrFeatureDto.dependencies, STRING_DELIMITER);
-            for (const auto& dependency :dependenciesList)
-            {
-                siArray.addMember("") <<= dependency;
-            }
-            siDependencies <<= siArray;
-            siDependencies.setName(DEPENDENCIES_NAME);
-            siFeaturesList.addMember("") <<= siFeature;
-        }
-        siResp.addMember("") <<= siFeaturesList;
-        cxxtools::JsonSerializer serializer(reply.out());
-        serializer.serialize(siResp).finish();
+    {   
+        reply.out() << getFeatureListManaged();
     }
     catch (std::runtime_error& ex)
     {
-        http_die ("internal-error", TRANSLATE_ME ("SrrException on get feature list managed").c_str());
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on save IPM2").c_str());
     }
         
 </%cpp>

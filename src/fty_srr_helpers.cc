@@ -38,7 +38,7 @@
  * @param userData
  * @return The Reply or MessageBusException when a time out occurs.
  */
-dto::UserData sendRequest(dto::srr::Action action, const dto::UserData& userData)
+dto::UserData sendRequest(const std::string & action, const dto::UserData& userData)
 {
     // Client id
     std::string clientId = messagebus::getClientId(AGENT_NAME);
@@ -48,7 +48,7 @@ dto::UserData sendRequest(dto::srr::Action action, const dto::UserData& userData
     // Build message
     messagebus::Message msg;
     msg.userData() = userData;
-    msg.metaData().emplace(messagebus::Message::SUBJECT, actionToString(action));
+    msg.metaData().emplace(messagebus::Message::SUBJECT, action);
     msg.metaData().emplace(messagebus::Message::FROM, clientId);
     msg.metaData().emplace(messagebus::Message::TO, AGENT_NAME_REQUEST_DESTINATION);
     msg.metaData().emplace(messagebus::Message::COORELATION_ID, messagebus::generateUuid());
@@ -58,7 +58,6 @@ dto::UserData sendRequest(dto::srr::Action action, const dto::UserData& userData
     return resp.userData();
 }
 
-<<<<<<< Updated upstream
 /**
  * Utility to split a string with a delimiter into a string vector.
  * @param input string

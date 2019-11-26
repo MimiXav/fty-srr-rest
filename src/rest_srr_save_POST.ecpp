@@ -34,28 +34,25 @@ using namespace dto::srr;
     * Get IPM2 configuration data from an input list
     *
     */
-   static SaveResponse saveIpm2Configuration(const std::string &inputData)
+   static std::string saveIpm2Configuration(const std::string &inputData)
    {
         // Default status
-        SaveResponse response();
-        
-       //dto::srr::SrrSaveDto respDto(dto::srr::Status::FAILED);
-        // Build query
-        //dto::srr::SrrQueryDto query(dto::srr::Action::SAVE, inputData);
         Query query = saveQueryFromUiJson(inputData);
         
         dto::UserData reqData;
         reqData << query;
+        
         // Send request
-        //dto::UserData respData = sendRequest(dto::srr::Action::SAVE, reqData);
-        dto::UserData respData = sendRequest(/*dto::srr::Action::SAVE*/ "save", reqData);
-        if (!respData.empty())
+        dto::UserData respData = sendRequest("save", reqData);
+        if (respData.empty())
         {
-//            respDto.status = dto::srr::Status::SUCCESS;
-//            respDto.config = respData.front();
-            //response <<= respData.front();
+           throw std::runtime_error("Impossible to save.");
         }
-        //return response;
+        
+        Response response;
+        respData >> response;
+        
+        return responseToUiJson(response);
    }
 
 
@@ -74,16 +71,8 @@ UserInfo user;
     //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
   
     try
-    {
-        //dto::srr::SrrSaveDto respDto = saveIpm2Configuration(request.getBody());
-        SaveResponse reponse = saveIpm2Configuration(request.getBody());
-        
-        // Output serialization
-        cxxtools::SerializationInfo siResp;
-        //JSON::readFromString (respDto.config, siResp);
-
-        cxxtools::JsonSerializer serializer(reply.out());
-        serializer.serialize(siResp).finish();
+    {   
+        reply.out() << saveIpm2Configuration(request.getBody());
     }
     catch (std::runtime_error& ex)
     {
