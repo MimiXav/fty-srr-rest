@@ -40,6 +40,7 @@
  */
 dto::UserData sendRequest(const std::string & action, const dto::UserData& userData)
 {
+    log_debug("sendRequest <%s> action");
     // Client id
     std::string clientId = messagebus::getClientId(AGENT_NAME);
     std::unique_ptr<messagebus::MessageBus> requester(messagebus::MlmMessageBus(END_POINT, clientId));
@@ -83,7 +84,7 @@ static std::string serializeJson(const cxxtools::SerializationInfo & si, bool be
 
 //deserilizer from UI Json
 using namespace dto::srr;
-static std::string statusToString(Status status);
+static std::string statusToString(dto::srr::Status status);
 
 static const std::map<Status, std::string> statusInString =
 {
@@ -123,7 +124,7 @@ Query resetQueryFromUiJson(const std::string & json)
     return query;
 }
         
-void operator>>= (const cxxtools::SerializationInfo& si, SaveQuery & query)
+void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::SaveQuery & query)
 {
     si.getMember("passphrase") >>= *(query.mutable_passpharse());
 
@@ -136,7 +137,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, SaveQuery & query)
     }           
 }
 
-void operator>>= (const cxxtools::SerializationInfo& si, RestoreQuery & query)
+void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::RestoreQuery & query)
 {
     si.getMember("passphrase") >>= *(query.mutable_passpharse());
 
@@ -172,7 +173,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, RestoreQuery & query)
     }  
 }
 
-void operator>>= (const cxxtools::SerializationInfo& si, ResetQuery & query)        
+void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::ResetQuery & query)        
 {
     const cxxtools::SerializationInfo & featuresSi = si.getMember("featuresList");
 
@@ -190,7 +191,7 @@ std::string responseToUiJson(const Response & response)
     return serializeJson(si);
 }
 
-void operator<<= (cxxtools::SerializationInfo& si, const Response & response)
+void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::Response & response)
 {
     switch (response.parameters_case())
     {
@@ -215,7 +216,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const Response & response)
     }
 }
 
-void operator<<= (cxxtools::SerializationInfo& si, const SaveResponse & response)
+void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::SaveResponse & response)
 {
     si.addMember("status") <<= statusToString(getGlobalStatus(response));
     cxxtools::SerializationInfo & featuresSi = si.addMember("features");
@@ -246,7 +247,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const SaveResponse & response
     }
 }
 
-void operator<<= (cxxtools::SerializationInfo& si, const RestoreResponse & response)
+void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::RestoreResponse & response)
 {
     si.addMember("status") <<= statusToString(getGlobalStatus(response));
     cxxtools::SerializationInfo & featuresSi = si.addMember("statusList");
@@ -263,7 +264,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const RestoreResponse & respo
     featuresSi.setCategory(cxxtools::SerializationInfo::Category::Array);
 }
 
-void operator<<= (cxxtools::SerializationInfo& si, const ResetResponse & response)
+void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ResetResponse & response)
 {
     si.addMember("status") <<= statusToString(getGlobalStatus(response));
     cxxtools::SerializationInfo & featuresSi = si.addMember("statusList");
@@ -280,7 +281,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const ResetResponse & respons
     featuresSi.setCategory(cxxtools::SerializationInfo::Category::Array);
 }
 
-void operator<<= (cxxtools::SerializationInfo& si, const ListFeatureResponse & response)
+void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ListFeatureResponse & response)
 {
     si.addMember("status") <<= statusToString(getGlobalStatus(response));
     cxxtools::SerializationInfo & featuresSi = si.addMember("featuresList");
@@ -300,7 +301,7 @@ void operator<<= (cxxtools::SerializationInfo& si, const ListFeatureResponse & r
     featuresSi.setCategory(cxxtools::SerializationInfo::Category::Array);
 }
 
-std::string statusToString(Status status)
+std::string statusToString(dto::srr::Status status)
 {
     const auto it = statusInString.find(status);
 

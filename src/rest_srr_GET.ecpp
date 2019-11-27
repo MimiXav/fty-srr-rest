@@ -67,7 +67,8 @@ UserInfo user;
     //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
     
     try
-    {   
+    {
+        log_debug("we got something");
         reply.out() << getFeatureListManaged();
     }
     catch (std::runtime_error& ex)
