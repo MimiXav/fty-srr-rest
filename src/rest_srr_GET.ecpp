@@ -34,23 +34,22 @@ using namespace dto::srr;
  */
 static std::string getFeatureListManaged()
 {
-     // Default status
-     Query query = createListFeatureQuery();
-
-     dto::UserData reqData;
-     reqData << query;
-
-     // Send request
-     dto::UserData respData = sendRequest("get", reqData);
-     if (respData.empty())
-     {
-        throw std::runtime_error("Impossible to get the list of features.");
-     }
-
-     Response response;
-     respData >> response;
-
-     return responseToUiJson(response);
+    // Create list feature  query
+    Query query = createListFeatureQuery();
+    // Transform it to UserData
+    dto::UserData reqData;
+    reqData << query;
+    // Send request
+    dto::UserData respData = sendRequest("getFeatureList", reqData);
+    if (respData.empty())
+    {
+       throw std::runtime_error("Get features list error.");
+    }
+    // Get Response
+    Response response;
+    respData >> response;
+    // Transform it to publish on UI
+    return responseToUiJson(response);
 }
 
 </%pre>
@@ -68,7 +67,7 @@ UserInfo user;
     
     try
     {
-        log_debug("we got something");
+        getFeatureListManaged();
         reply.out() << getFeatureListManaged();
     }
     catch (std::runtime_error& ex)
