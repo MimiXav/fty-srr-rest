@@ -63,7 +63,7 @@ UserInfo user;
             {BiosProfile::Admin, "R"}
     };
 
-    //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
     
     try
     {

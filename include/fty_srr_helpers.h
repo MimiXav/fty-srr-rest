@@ -22,11 +22,9 @@
 #ifndef FTY_SRR_HELPERS_H_INCLUDED
 #define FTY_SRR_HELPERS_H_INCLUDED
 
-#include <fty_common_messagebus.h>
-#include <fty_srr_dto.h>
-#include <srr_pb.h>
-
 #include <string>
+#include <fty_common_messagebus.h>
+
 
 /**
  * Send a request and wait reply in synchronous mode.
@@ -34,7 +32,7 @@
  * @param userData User data to send
  * @return The Reply or MessageBusException when a time out occurs.
  */
-dto::UserData sendRequest(const std::string & action, const dto::UserData& userData);
+dto::UserData sendRequest(const std::string& action, const dto::UserData& userData);
 
 /**
  * Utility to split a string with a delimiter into a string vector.
@@ -43,22 +41,5 @@ dto::UserData sendRequest(const std::string & action, const dto::UserData& userD
  * @return A list of string splited.
  */
 std::vector<std::string> splitString(const std::string input, const char delimiter);
-
-//helpers with SRR
-dto::srr::Query saveQueryFromUiJson(const std::string & json);
-dto::srr::Query restoreQueryFromUiJson(const std::string & json);
-dto::srr::Query resetQueryFromUiJson(const std::string & json);
-
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::SaveQuery & query);
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::RestoreQuery & query);
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::ResetQuery & query);
-
-std::string responseToUiJson(const dto::srr::Response & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::Response & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::SaveResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::RestoreResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ResetResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ListFeatureResponse & response);
- 
 
 #endif
