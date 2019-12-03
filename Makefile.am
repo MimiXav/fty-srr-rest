@@ -10,24 +10,14 @@ AM_CXXFLAGS = \
 
 AM_CPPFLAGS = \
     ${cxxtools_CFLAGS} \
-    ${log4cplus_CFLAGS} \
     ${fty_common_logging_CFLAGS} \
-    ${libsodium_CFLAGS} \
-    ${libzmq_CFLAGS} \
-    ${czmq_CFLAGS} \
-    ${tntnet_CFLAGS} \
-    ${libsasl2_CFLAGS} \
-    ${fty_common_CFLAGS} \
-    ${tntdb_CFLAGS} \
-    ${fty_common_db_CFLAGS} \
     ${fty_common_rest_CFLAGS} \
-    ${malamute_CFLAGS} \
     ${fty_common_messagebus_CFLAGS} \
     ${fty_common_dto_CFLAGS} \
     -D__STDC_FORMAT_MACROS \
     -I$(srcdir)/include
 
-project_libs = ${cxxtools_LIBS} ${log4cplus_LIBS} ${fty_common_logging_LIBS} ${libsodium_LIBS} ${libzmq_LIBS} ${czmq_LIBS} ${tntnet_LIBS} ${libsasl2_LIBS} ${fty_common_LIBS} ${tntdb_LIBS} ${fty_common_db_LIBS} ${fty_common_rest_LIBS} ${malamute_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS}
+project_libs = ${cxxtools_LIBS} ${fty_common_logging_LIBS} ${fty_common_rest_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS}
 
 SUBDIRS = doc
 SUBDIRS += include
@@ -49,18 +39,8 @@ DISTCLEANFILES =
 if ENABLE_DIST_CMAKEFILES
 EXTRA_DIST += \
     Findcxxtools.cmake \
-    Findlog4cplus.cmake \
     Findfty_common_logging.cmake \
-    Findlibsodium.cmake \
-    Findlibzmq.cmake \
-    Findczmq.cmake \
-    Findtntnet.cmake \
-    Findlibsasl2.cmake \
-    Findfty_common.cmake \
-    Findtntdb.cmake \
-    Findfty_common_db.cmake \
     Findfty_common_rest.cmake \
-    Findmalamute.cmake \
     Findfty_common_messagebus.cmake \
     Findfty_common_dto.cmake \
     builds/cmake/Modules/ClangFormat.cmake \

@@ -48,18 +48,8 @@ BuildRequires:  pkgconfig
 BuildRequires:  xmlto
 BuildRequires:  gcc-c++
 BuildRequires:  cxxtools-devel
-BuildRequires:  log4cplus-devel
 BuildRequires:  fty-common-logging-devel
-BuildRequires:  libsodium-devel
-BuildRequires:  zeromq-devel
-BuildRequires:  czmq-devel >= 3.0.2
-BuildRequires:  tntnet-devel
-BuildRequires:  cyrus-sasl-devel
-BuildRequires:  fty-common-devel
-BuildRequires:  tntdb-devel
-BuildRequires:  fty-common-db-devel
 BuildRequires:  fty-common-rest-devel
-BuildRequires:  malamute-devel >= 1.0.0
 BuildRequires:  fty-common-messagebus-devel
 BuildRequires:  fty-common-dto-devel
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -86,18 +76,8 @@ Summary:        save, restore and reset rest api
 Group:          System/Libraries
 Requires:       libfty_srr_rest1 = %{version}
 Requires:       cxxtools-devel
-Requires:       log4cplus-devel
 Requires:       fty-common-logging-devel
-Requires:       libsodium-devel
-Requires:       zeromq-devel
-Requires:       czmq-devel >= 3.0.2
-Requires:       tntnet-devel
-Requires:       cyrus-sasl-devel
-Requires:       fty-common-devel
-Requires:       tntdb-devel
-Requires:       fty-common-db-devel
 Requires:       fty-common-rest-devel
-Requires:       malamute-devel >= 1.0.0
 Requires:       fty-common-messagebus-devel
 Requires:       fty-common-dto-devel
 
