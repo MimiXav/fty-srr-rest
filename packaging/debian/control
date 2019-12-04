@@ -26,21 +26,14 @@ Maintainer:     fty-srr-rest Developers <eatonipcopensource@eaton.com>
 Standards-Version: 4.0.1.0
 Build-Depends: debhelper (>= 9),
     pkg-config,
-    libcxxtools-dev,
-    liblog4cplus-dev,
-    libfty-common-logging-dev,
-    libsodium-dev,
-    libzmq3-dev,
-    libczmq-dev (>= 3.0.2),
-    libtntnet-dev,
     libsasl2-dev,
-    libfty-common-dev,
     libtntdb-dev,
-    libfty-common-db-dev,
+    libcxxtools-dev,
+    libfty-common-logging-dev,
     libfty-common-rest-dev,
-    libmlm-dev (>= 1.0.0),
     libfty-common-messagebus-dev,
     libfty-common-dto-dev,
+    libprotobuf-dev,
     asciidoc-base | asciidoc, xmlto,
     dh-autoreconf
 
@@ -56,21 +49,14 @@ Architecture: any
 Section: libdevel
 Depends:
     ${misc:Depends},
-    libcxxtools-dev,
-    liblog4cplus-dev,
-    libfty-common-logging-dev,
-    libsodium-dev,
-    libzmq3-dev,
-    libczmq-dev (>= 3.0.2),
-    libtntnet-dev,
     libsasl2-dev,
-    libfty-common-dev,
     libtntdb-dev,
-    libfty-common-db-dev,
+    libcxxtools-dev,
+    libfty-common-logging-dev,
     libfty-common-rest-dev,
-    libmlm-dev (>= 1.0.0),
     libfty-common-messagebus-dev,
     libfty-common-dto-dev,
+    libprotobuf-dev,
     libfty-srr-rest1 (= ${binary:Version})
 Description: fty-srr-rest development tools
  This package contains development files for fty-srr-rest:

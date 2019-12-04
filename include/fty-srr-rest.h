@@ -33,15 +33,4 @@
 #define MSG_QUEUE_NAME                  "ETN.Q.IPMCORE.SRR"
 #define DEFAULT_TIME_OUT                5
 
-// Properties definition
-#define SRR_VERSION                     "version"
-#define ACTIVE_VERSION                  "1.0"
-#define FEATURE_LIST_NAME               "featuresList"
-#define FEATURE_NAME                    "name"
-#define DEPENDENCIES_NAME               "dependencies"
-#define STATUS                          "status"
-#define STATUS_LIST                     "statusList"
-#define ERROR                           "error"
-#define STRING_DELIMITER                ';'
-
 #endif

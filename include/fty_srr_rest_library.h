@@ -30,11 +30,14 @@
 //  Set up environment for the application
 
 //  External dependencies
+#include <sasl/sasl.h>
+#include <tntdb.h>
 #include <cxxtools/allocator.h>
 #include <fty_log.h>
 #include <fty_common_rest.h>
 #include <fty_common_messagebus.h>
 #include <fty_common_dto.h>
+#include <google/protobuf/stubs/common.h>
 
 //  FTY_SRR_REST version macros for compile-time API detection
 #define FTY_SRR_REST_VERSION_MAJOR 1

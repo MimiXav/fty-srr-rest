@@ -5,7 +5,9 @@ PACKAGE_NAME_WITH_UNDERSCORE=$(echo "${PACKAGE_NAME}" | sed 's/-/_/g')
 
 #Update control file
 printf "Update control file... "
-if [ ! $(grep -q "# for the legacy-named metapackage to group the common" packaging/debian/control) ]
+grep -q "# for the legacy-named metapackage to group the common" packaging/debian/control
+ALREADY_DONE="$?"
+if [ "${ALREADY_DONE}" = "0" ]
 then
     printf "Already done\n"
 else

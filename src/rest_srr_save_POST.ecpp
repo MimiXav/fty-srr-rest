@@ -24,29 +24,34 @@
  */
  #><%pre>
 
+#include "srr_pb.h"
 #include <src/fty_srr_rest_classes.h>
 
-   /**
-    * Get IPM2 configuration data from an input list
-    *
-    */
-   static dto::srr::SrrSaveDto saveIpm2Configuration(const std::string &inputData)
-   {
-        // Default status
-        dto::srr::SrrSaveDto respDto(dto::srr::Status::FAILED);
-        // Build query
-        dto::srr::SrrQueryDto query(dto::srr::Action::SAVE, inputData);
-        dto::UserData reqData;
-        reqData << query;
-        // Send request
-        dto::UserData respData = sendRequest(dto::srr::Action::SAVE, reqData);
-        if (!respData.empty())
-        {
-            respDto.status = dto::srr::Status::SUCCESS;
-            respDto.config = respData.front();
-        }
-        return respDto;
-   }
+using namespace dto::srr;
+
+/**
+ * Get IPM2 configuration data from an input list
+ *
+ */
+static std::string saveIpm2Configuration(const std::string &inputData)
+{
+    // Get save query
+    Query query = saveQueryFromUiJson(inputData);
+    // Transform it to UserData
+    dto::UserData reqData;
+    reqData << query;
+    // Send request
+    dto::UserData respData = sendRequest("save", reqData);
+    if (respData.empty())
+    {
+       throw std::runtime_error("Save error.");
+    }
+    // Get Response
+    Response response;
+    respData >> response;
+    //Transform it to publish on UI
+    return responseToUiJson(response);
+}
 
 
 </%pre>
@@ -64,15 +69,8 @@ UserInfo user;
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
   
     try
-    {
-        dto::srr::SrrSaveDto respDto = saveIpm2Configuration(request.getBody());
-        
-        // Output serialization
-        cxxtools::SerializationInfo siResp;
-        JSON::readFromString (respDto.config, siResp);
-
-        cxxtools::JsonSerializer serializer(reply.out());
-        serializer.serialize(siResp).finish();
+    {   
+        reply.out() << saveIpm2Configuration(request.getBody());
     }
     catch (std::runtime_error& ex)
     {

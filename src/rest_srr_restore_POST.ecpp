@@ -24,27 +24,34 @@
  */
  #><%pre>
 
+#include "srr_pb.h"
 #include <src/fty_srr_rest_classes.h>
+
+using namespace dto::srr;
 
 /**
  * Restore IPM2 configuration data
  *
  */
-static dto::srr::SrrRestoreDtoList restoreIpm2Configuration(const std::string& inputData)
+
+static std::string restoreIpm2Configuration(const std::string& inputData)
 {
-    // Default status
-    dto::srr::SrrRestoreDtoList respDto(dto::srr::Status::FAILED);
-    // Build query
-    dto::srr::SrrQueryDto query(dto::srr::Action::RESTORE, inputData);
+    // Get restore query    
+    Query query = restoreQueryFromUiJson(inputData);
+    // Transform it to UserData
     dto::UserData reqData;
     reqData << query;
     // Send request
-    dto::UserData respData = sendRequest(dto::srr::Action::RESTORE, reqData);
-    if (!respData.empty())
+    dto::UserData respData = sendRequest("restore", reqData);
+    if (respData.empty())
     {
-        respData >> respDto;
+       throw std::runtime_error("Restore error.");
     }
-    return respDto;
+    // Get Response
+    Response response;
+    respData >> response;
+    //Transform it to publish on UI
+    return responseToUiJson(response);
 }
 
 </%pre>
@@ -61,34 +68,12 @@ UserInfo user;
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
     
     try
-    {
-        // Restore IPM2 configuration data.
-        dto::srr::SrrRestoreDtoList respDto = restoreIpm2Configuration(request.getBody());
-        
-        // Output serialization
-        cxxtools::SerializationInfo siResp;
-        siResp.addMember(STATUS) <<= statusToString(respDto.status);
-
-        cxxtools::SerializationInfo siStatusList;
-        siStatusList.setCategory(cxxtools::SerializationInfo::Category::Array);
-        siStatusList.setName(STATUS_LIST);
-
-        for (const auto& resp : respDto.responseList)
-        {
-            cxxtools::SerializationInfo siFeature;
-            siFeature.addMember(FEATURE_NAME) <<= resp.name;
-            siFeature.addMember(STATUS) <<= statusToString(resp.status);
-            siFeature.addMember(ERROR) <<= resp.error;
-            siStatusList.addMember("") <<= siFeature;
-        }
-        siResp.addMember("") <<= siStatusList;
-        
-        cxxtools::JsonSerializer serializer(reply.out());
-        serializer.serialize(siResp).finish();
+    {   
+        reply.out() << restoreIpm2Configuration(request.getBody());
     }
     catch (std::runtime_error& ex)
     {
-        http_die ("internal-error", TRANSLATE_ME ("SrrException on restore IPM2").c_str());
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on save IPM2").c_str());
     }
     
 </%cpp>
