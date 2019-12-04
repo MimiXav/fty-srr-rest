@@ -23,6 +23,10 @@
 #define FTY_SRR_HELPERS_H_INCLUDED
 
 #include <fty_common_messagebus.h>
+#include <fty_srr_dto.h>
+#include <srr_pb.h>
+
+#include <string>
 
 /**
  * Send a request and wait reply in synchronous mode.
@@ -30,7 +34,7 @@
  * @param userData User data to send
  * @return The Reply or MessageBusException when a time out occurs.
  */
-dto::UserData sendRequest(const dto::srr::Action action, const dto::UserData& userData);
+dto::UserData sendRequest(const std::string & action, const dto::UserData& userData);
 
 /**
  * Utility to split a string with a delimiter into a string vector.
@@ -39,5 +43,6 @@ dto::UserData sendRequest(const dto::srr::Action action, const dto::UserData& us
  * @return A list of string splited.
  */
 std::vector<std::string> splitString(const std::string input, const char delimiter);
+ 
 
 #endif

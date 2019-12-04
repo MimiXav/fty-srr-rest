@@ -136,5 +136,4 @@ nbproject/
 # CMake in general
 builds/cmake/
 CMake*
-CMakeList.txt
 *.cmake

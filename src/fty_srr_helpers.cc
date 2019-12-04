@@ -28,13 +28,17 @@
 
 #include "fty_srr_rest_classes.h"
 
+#include <cxxtools/serializationinfo.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/jsondeserializer.h>
+
 /**
  * Send a request and wait reply in synchronous mode.
  * @param subject
  * @param userData
  * @return The Reply or MessageBusException when a time out occurs.
  */
-dto::UserData sendRequest(dto::srr::Action action, const dto::UserData& userData)
+dto::UserData sendRequest(const std::string& action, const dto::UserData& userData)
 {
     // Client id
     std::string clientId = messagebus::getClientId(AGENT_NAME);
@@ -44,7 +48,7 @@ dto::UserData sendRequest(dto::srr::Action action, const dto::UserData& userData
     // Build message
     messagebus::Message msg;
     msg.userData() = userData;
-    msg.metaData().emplace(messagebus::Message::SUBJECT, actionToString(action));
+    msg.metaData().emplace(messagebus::Message::SUBJECT, action);
     msg.metaData().emplace(messagebus::Message::FROM, clientId);
     msg.metaData().emplace(messagebus::Message::TO, AGENT_NAME_REQUEST_DESTINATION);
     msg.metaData().emplace(messagebus::Message::COORELATION_ID, messagebus::generateUuid());
