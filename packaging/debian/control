@@ -1,6 +1,8 @@
 #
 #    NOTE: This file was customized after generation, take care to keep this during updates.
 #
+#    NOTE: This file was customized after generation, take care to keep this during updates.
+#
 #    fty-srr-rest - Save, restore and reset REST API
 #
 #    Copyright (C) 2014 - 2018 Eaton
@@ -70,3 +72,25 @@ Depends:
 Description: fty-srr-rest debugging symbols
  This package contains the debugging symbols for fty-srr-rest:
  save, restore and reset rest api.
+
+
+# Customization over zproject-generated code follows
+# for the legacy-named metapackage to group the common
+# installation dependency for other components:
+Package: fty-srr-rest
+Architecture: any
+Section: net
+Priority: optional
+Depends:
+    libfty-srr-rest1 (= ${binary:Version}),
+    ${misc:Depends},
+    tntnet-runtime,
+    malamute,
+    libfty-common1,
+    libfty-common-mlm1,
+    libfty-common-db1,
+    libfty-common-rest1,
+    ipc-data
+Recommends: msmtp
+Description: grouping of end-user solution with fty-srr-rest
+
