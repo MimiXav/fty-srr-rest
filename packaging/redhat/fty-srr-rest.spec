@@ -48,6 +48,7 @@ BuildRequires:  pkgconfig
 BuildRequires:  xmlto
 BuildRequires:  gcc-c++
 BuildRequires:  cyrus-sasl-devel
+BuildRequires:  tntdb-devel
 BuildRequires:  cxxtools-devel
 BuildRequires:  fty-common-logging-devel
 BuildRequires:  fty-common-rest-devel
@@ -78,6 +79,7 @@ Summary:        save, restore and reset rest api
 Group:          System/Libraries
 Requires:       libfty_srr_rest1 = %{version}
 Requires:       cyrus-sasl-devel
+Requires:       tntdb-devel
 Requires:       cxxtools-devel
 Requires:       fty-common-logging-devel
 Requires:       fty-common-rest-devel

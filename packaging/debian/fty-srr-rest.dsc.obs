@@ -7,6 +7,7 @@ Architecture: any
 Build-Depends: debhelper (>= 9),
     pkg-config,
     libsasl2-dev,
+    libtntdb-dev,
     libcxxtools-dev,
     libfty-common-logging-dev,
     libfty-common-rest-dev,

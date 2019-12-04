@@ -10,6 +10,7 @@ AM_CXXFLAGS = \
 
 AM_CPPFLAGS = \
     ${libsasl2_CFLAGS} \
+    ${tntdb_CFLAGS} \
     ${cxxtools_CFLAGS} \
     ${fty_common_logging_CFLAGS} \
     ${fty_common_rest_CFLAGS} \
@@ -19,7 +20,7 @@ AM_CPPFLAGS = \
     -D__STDC_FORMAT_MACROS \
     -I$(srcdir)/include
 
-project_libs = ${libsasl2_LIBS} ${cxxtools_LIBS} ${fty_common_logging_LIBS} ${fty_common_rest_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS} ${protobuf_LIBS}
+project_libs = ${libsasl2_LIBS} ${tntdb_LIBS} ${cxxtools_LIBS} ${fty_common_logging_LIBS} ${fty_common_rest_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS} ${protobuf_LIBS}
 
 SUBDIRS = doc
 SUBDIRS += include
@@ -41,6 +42,7 @@ DISTCLEANFILES =
 if ENABLE_DIST_CMAKEFILES
 EXTRA_DIST += \
     Findlibsasl2.cmake \
+    Findtntdb.cmake \
     Findcxxtools.cmake \
     Findfty_common_logging.cmake \
     Findfty_common_rest.cmake \

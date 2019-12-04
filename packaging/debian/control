@@ -1,8 +1,6 @@
 #
 #    NOTE: This file was customized after generation, take care to keep this during updates.
 #
-#    NOTE: This file was customized after generation, take care to keep this during updates.
-#
 #    fty-srr-rest - Save, restore and reset REST API
 #
 #    Copyright (C) 2014 - 2018 Eaton
@@ -29,6 +27,7 @@ Standards-Version: 4.0.1.0
 Build-Depends: debhelper (>= 9),
     pkg-config,
     libsasl2-dev,
+    libtntdb-dev,
     libcxxtools-dev,
     libfty-common-logging-dev,
     libfty-common-rest-dev,
@@ -51,6 +50,7 @@ Section: libdevel
 Depends:
     ${misc:Depends},
     libsasl2-dev,
+    libtntdb-dev,
     libcxxtools-dev,
     libfty-common-logging-dev,
     libfty-common-rest-dev,
@@ -72,7 +72,6 @@ Depends:
 Description: fty-srr-rest debugging symbols
  This package contains the debugging symbols for fty-srr-rest:
  save, restore and reset rest api.
-
 
 # Customization over zproject-generated code follows
 # for the legacy-named metapackage to group the common
