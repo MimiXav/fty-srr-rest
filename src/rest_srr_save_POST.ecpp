@@ -49,6 +49,7 @@ static std::string saveIpm2Configuration(const std::string &inputData)
     // Get Response
     Response response;
     respData >> response;
+    //Transform it to publish on UI
     return responseToUiJson(response);
 }
 
@@ -65,7 +66,7 @@ UserInfo user;
             {BiosProfile::Admin, "C"}
     };
 
-    //CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+    CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
   
     try
     {   
