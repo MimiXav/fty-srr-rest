@@ -3,3 +3,4 @@
    fty-srr-rest -> fty-common-rest;
    fty-srr-rest -> fty-common-messagebus;
    fty-srr-rest -> fty-common-dto;
+   fty-srr-rest -> protobuf;

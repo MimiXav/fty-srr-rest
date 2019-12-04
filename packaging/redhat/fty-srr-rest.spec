@@ -47,11 +47,13 @@ BuildRequires:  libtool
 BuildRequires:  pkgconfig
 BuildRequires:  xmlto
 BuildRequires:  gcc-c++
+BuildRequires:  cyrus-sasl-devel
 BuildRequires:  cxxtools-devel
 BuildRequires:  fty-common-logging-devel
 BuildRequires:  fty-common-rest-devel
 BuildRequires:  fty-common-messagebus-devel
 BuildRequires:  fty-common-dto-devel
+BuildRequires:  protobuf-devel
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -75,11 +77,13 @@ This package contains shared library for fty-srr-rest: save, restore and reset r
 Summary:        save, restore and reset rest api
 Group:          System/Libraries
 Requires:       libfty_srr_rest1 = %{version}
+Requires:       cyrus-sasl-devel
 Requires:       cxxtools-devel
 Requires:       fty-common-logging-devel
 Requires:       fty-common-rest-devel
 Requires:       fty-common-messagebus-devel
 Requires:       fty-common-dto-devel
+Requires:       protobuf-devel
 
 %description devel
 save, restore and reset rest api development tools
