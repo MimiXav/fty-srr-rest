@@ -43,22 +43,6 @@ dto::UserData sendRequest(const std::string & action, const dto::UserData& userD
  * @return A list of string splited.
  */
 std::vector<std::string> splitString(const std::string input, const char delimiter);
-
-//helpers with SRR
-dto::srr::Query saveQueryFromUiJson(const std::string & json);
-dto::srr::Query restoreQueryFromUiJson(const std::string & json);
-dto::srr::Query resetQueryFromUiJson(const std::string & json);
-
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::SaveQuery & query);
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::RestoreQuery & query);
-void operator>>= (const cxxtools::SerializationInfo& si, dto::srr::ResetQuery & query);
-
-std::string responseToUiJson(const dto::srr::Response & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::Response & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::SaveResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::RestoreResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ResetResponse & response);
-void operator<<= (cxxtools::SerializationInfo& si, const dto::srr::ListFeatureResponse & response);
  
 
 #endif
