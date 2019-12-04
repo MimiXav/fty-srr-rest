@@ -1,0 +1,5 @@
+   fty-srr-rest -> cxxtools;
+   fty-srr-rest -> fty-common-logging;
+   fty-srr-rest -> fty-common-rest;
+   fty-srr-rest -> fty-common-messagebus;
+   fty-srr-rest -> fty-common-dto;
