@@ -30,9 +30,9 @@
 //  Set up environment for the application
 
 //  External dependencies
+#include <cxxtools/allocator.h>
 #include <sasl/sasl.h>
 #include <tntdb.h>
-#include <cxxtools/allocator.h>
 #include <fty_log.h>
 #include <fty_common_rest.h>
 #include <fty_common_messagebus.h>
