@@ -6,9 +6,9 @@ Maintainer: fty-srr-rest Developers <eatonipcopensource@eaton.com>
 Architecture: any
 Build-Depends: debhelper (>= 9),
     pkg-config,
+    libcxxtools-dev,
     libsasl2-dev,
     libtntdb-dev,
-    libcxxtools-dev,
     libfty-common-logging-dev,
     libfty-common-rest-dev,
     libfty-common-messagebus-dev,
