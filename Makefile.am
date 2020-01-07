@@ -9,6 +9,9 @@ AM_CXXFLAGS = \
     -std=c++11
 
 AM_CPPFLAGS = \
+    ${libsodium_CFLAGS} \
+    ${libzmq_CFLAGS} \
+    ${czmq_CFLAGS} \
     ${cxxtools_CFLAGS} \
     ${libsasl2_CFLAGS} \
     ${tntdb_CFLAGS} \
@@ -20,7 +23,7 @@ AM_CPPFLAGS = \
     -D__STDC_FORMAT_MACROS \
     -I$(srcdir)/include
 
-project_libs = ${cxxtools_LIBS} ${libsasl2_LIBS} ${tntdb_LIBS} ${fty_common_logging_LIBS} ${fty_common_rest_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS} ${protobuf_LIBS}
+project_libs = ${libsodium_LIBS} ${libzmq_LIBS} ${czmq_LIBS} ${cxxtools_LIBS} ${libsasl2_LIBS} ${tntdb_LIBS} ${fty_common_logging_LIBS} ${fty_common_rest_LIBS} ${fty_common_messagebus_LIBS} ${fty_common_dto_LIBS} ${protobuf_LIBS}
 
 SUBDIRS = doc
 SUBDIRS += include
@@ -41,6 +44,9 @@ DISTCLEANFILES =
 
 if ENABLE_DIST_CMAKEFILES
 EXTRA_DIST += \
+    Findlibsodium.cmake \
+    Findlibzmq.cmake \
+    Findczmq.cmake \
     Findcxxtools.cmake \
     Findlibsasl2.cmake \
     Findtntdb.cmake \
