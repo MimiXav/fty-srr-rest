@@ -101,10 +101,13 @@
 //  These classes are stable or legacy and built in all releases
 typedef struct _fty_srr_helpers_t fty_srr_helpers_t;
 #define FTY_SRR_HELPERS_T_DEFINED
+typedef struct _stub_srr_rest_t stub_srr_rest_t;
+#define STUB_SRR_REST_T_DEFINED
 
 
 //  Public classes, each with its own header file
 #include "fty_srr_helpers.h"
+#include "stub_srr_rest.h"
 
 #ifdef FTY_SRR_REST_BUILD_DRAFT_API
 
