@@ -5,6 +5,7 @@
 nobase_include_HEADERS = \
     fty-srr-rest.h \
     fty_srr_helpers.h \
+    stub_srr_rest.h \
     fty_srr_rest_library.h
 
 

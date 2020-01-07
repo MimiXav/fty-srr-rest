@@ -13,6 +13,8 @@
 # Ignore the source doc texts generated from program sources
 fty_srr_helpers.txt
 fty_srr_helpers.doc
+stub_srr_rest.txt
+stub_srr_rest.doc
 
 # Make sure to track the manually maintained project description
 !*.adoc

@@ -1,6 +1,9 @@
 #
 #    fty-srr-rest - Save, restore and reset REST API
 #
+#   NOTE: This file was customized after generation,
+#   take care to keep this during updates.
+#
 #    Copyright (C) 2014 - 2018 Eaton
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -47,6 +50,10 @@ BuildRequires:  libtool
 BuildRequires:  pkgconfig
 BuildRequires:  xmlto
 BuildRequires:  gcc-c++
+BuildRequires:  libsodium-devel
+BuildRequires:  zeromq-devel
+BuildRequires:  czmq-devel >= 3.0.2
+BuildRequires:  fty-common-devel
 BuildRequires:  cxxtools-devel
 BuildRequires:  cyrus-sasl-devel
 BuildRequires:  tntdb-devel
@@ -70,14 +77,20 @@ This package contains shared library for fty-srr-rest: save, restore and reset r
 %post -n libfty_srr_rest1 -p /sbin/ldconfig
 %postun -n libfty_srr_rest1 -p /sbin/ldconfig
 
+# Note: the .so file is delivered as part of main package for tntnet to find it
 %files -n libfty_srr_rest1
 %defattr(-,root,root)
 %{_libdir}/libfty_srr_rest.so.*
+%{_libdir}/libfty_srr_rest.so
 
 %package devel
 Summary:        save, restore and reset rest api
 Group:          System/Libraries
 Requires:       libfty_srr_rest1 = %{version}
+Requires:       libsodium-devel
+Requires:       zeromq-devel
+Requires:       czmq-devel >= 3.0.2
+Requires:       fty-common-devel
 Requires:       cxxtools-devel
 Requires:       cyrus-sasl-devel
 Requires:       tntdb-devel
@@ -91,10 +104,11 @@ Requires:       protobuf-devel
 save, restore and reset rest api development tools
 This package contains development files for fty-srr-rest: save, restore and reset rest api
 
+# Note: the .so file is delivered as part of main package for tntnet to find it
 %files devel
 %defattr(-,root,root)
 %{_includedir}/*
-%{_libdir}/libfty_srr_rest.so
+###%{_libdir}/libfty_srr_rest.so
 %{_libdir}/pkgconfig/libfty_srr_rest.pc
 %{_mandir}/man3/*
 %{_mandir}/man7/*

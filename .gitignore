@@ -2,6 +2,9 @@
 # You can add hand-written code here.
 ### Note: General ignorance of CMake files has been added in gitignore; take care upon regens
 
+### Note: src/rest_*.cc are ignored as we use ecpp instead
+src/rest_*.cc
+
 save.xml
 # Object files
 *.o
@@ -73,6 +76,11 @@ DartConfiguration.tcl
 install_manifest.txt
 Testing/
 
+# CMake in general
+builds/cmake/
+CMake*
+*.cmake
+
 # Repositories downloaded by CI integration scripts
 tmp-deps/
 
@@ -130,7 +138,3 @@ nbproject/
 
 # editor backups
 *~
-# CMake in general
-builds/cmake/
-CMake*
-*.cmake

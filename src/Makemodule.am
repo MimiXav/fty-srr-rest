@@ -18,6 +18,7 @@ src_libfty_srr_rest_la_SOURCES = \
     src/rest_srr_save_POST.cc \
     src/rest_srr_restore_POST.cc \
     src/rest_srr_reset_POST.cc \
+    src/stub_srr_rest.cc \
     src/platform.h
 
 if ENABLE_DRAFTS

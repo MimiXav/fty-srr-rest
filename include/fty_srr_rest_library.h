@@ -30,6 +30,8 @@
 //  Set up environment for the application
 
 //  External dependencies
+#include <czmq.h>
+#include <fty_common.h>
 #include <cxxtools/allocator.h>
 #include <sasl/sasl.h>
 #include <tntdb.h>
@@ -48,26 +50,6 @@
     ((major) * 10000 + (minor) * 100 + (patch))
 #define FTY_SRR_REST_VERSION \
     FTY_SRR_REST_MAKE_VERSION(FTY_SRR_REST_VERSION_MAJOR, FTY_SRR_REST_VERSION_MINOR, FTY_SRR_REST_VERSION_PATCH)
-
-// czmq_prelude.h bits
-#if !defined (__WINDOWS__)
-#   if (defined WIN32 || defined _WIN32 || defined WINDOWS || defined _WINDOWS)
-#       undef __WINDOWS__
-#       define __WINDOWS__
-#   endif
-#endif
-
-// Windows MSVS doesn't have stdbool
-#if (defined (_MSC_VER) && !defined (true))
-#   if (!defined (__cplusplus) && (!defined (true)))
-#       define true 1
-#       define false 0
-        typedef char bool;
-#   endif
-#else
-#   include <stdbool.h>
-#endif
-// czmq_prelude.h bits
 
 #if defined (__WINDOWS__)
 #   if defined FTY_SRR_REST_STATIC
@@ -101,10 +83,13 @@
 //  These classes are stable or legacy and built in all releases
 typedef struct _fty_srr_helpers_t fty_srr_helpers_t;
 #define FTY_SRR_HELPERS_T_DEFINED
+typedef struct _stub_srr_rest_t stub_srr_rest_t;
+#define STUB_SRR_REST_T_DEFINED
 
 
 //  Public classes, each with its own header file
 #include "fty_srr_helpers.h"
+#include "stub_srr_rest.h"
 
 #ifdef FTY_SRR_REST_BUILD_DRAFT_API
 
