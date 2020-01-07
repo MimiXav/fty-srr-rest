@@ -31,6 +31,7 @@
 
 //  External dependencies
 #include <czmq.h>
+#include <fty_common.h>
 #include <cxxtools/allocator.h>
 #include <sasl/sasl.h>
 #include <tntdb.h>

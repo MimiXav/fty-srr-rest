@@ -1,6 +1,7 @@
    fty-srr-rest -> libsodium;
    fty-srr-rest -> libzmq;
    fty-srr-rest -> czmq;
+   fty-srr-rest -> fty-common;
    fty-srr-rest -> cxxtools;
    fty-srr-rest -> tntdb;
    fty-srr-rest -> fty-common-logging;

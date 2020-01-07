@@ -53,6 +53,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  libsodium-devel
 BuildRequires:  zeromq-devel
 BuildRequires:  czmq-devel >= 3.0.2
+BuildRequires:  fty-common-devel
 BuildRequires:  cxxtools-devel
 BuildRequires:  cyrus-sasl-devel
 BuildRequires:  tntdb-devel
@@ -89,6 +90,7 @@ Requires:       libfty_srr_rest1 = %{version}
 Requires:       libsodium-devel
 Requires:       zeromq-devel
 Requires:       czmq-devel >= 3.0.2
+Requires:       fty-common-devel
 Requires:       cxxtools-devel
 Requires:       cyrus-sasl-devel
 Requires:       tntdb-devel
