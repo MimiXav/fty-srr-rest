@@ -41,26 +41,26 @@
 
     <version major = "1" minor = "0" patch = "0" />
     <abi current = "1" revision = "0" age = "0" />
-	    
+
     <!-- Note: cxxtools facilities are directly used in this codebase -->
     <use project = "cxxtools"
         header = "cxxtools/allocator.h"
         repository = "https://github.com/42ity/cxxtools.git" />
 
-
     <use project = "libsasl2" header = "sasl/sasl.h" debian_name = "libsasl2-dev" redhat_name = "cyrus-sasl-devel"/>
+
     <use project = "tntdb" repository = "https://github.com/42ity/tntdb.git" builddir = "tntdb"/>
 
     <use project = "fty-common-logging" libname = "libfty_common_logging"
         header = "fty_log.h"
         repository = "https://github.com/42ity/fty-common-logging.git" />
-    
+
     <use project = "fty-common-rest" libname = "libfty_common_rest" header = "fty_common_rest.h"
         repository = "https://github.com/42ity/fty-common-rest.git" />
-    
+
     <use project = "fty-common-messagebus" libname = "libfty_common_messagebus" header = "fty_common_messagebus.h"
         repository = "https://github.com/42ity/fty-common-messagebus.git" />
-    
+
     <use project = "fty-common-dto" libname = "libfty_common_dto" header = "fty_common_dto.h"
         repository = "https://github.com/42ity/fty-common-dto.git" />
 
