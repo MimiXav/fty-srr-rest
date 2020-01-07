@@ -56,6 +56,10 @@
         </use>
     </use>
 
+    <!-- fty-common -->
+    <use project = "fty-common" libname = "libfty_common" header = "fty_common.h"
+        repository = "https://github.com/42ity/fty-common.git" />
+
     <!-- Note: cxxtools facilities are directly used in this codebase -->
     <use project = "cxxtools"
         header = "cxxtools/allocator.h"
