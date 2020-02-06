@@ -31,6 +31,6 @@
 #define AGENT_NAME                      "fty-srr-rest"
 #define AGENT_NAME_REQUEST_DESTINATION  "fty-srr"
 #define MSG_QUEUE_NAME                  "ETN.Q.IPMCORE.SRR"
-#define DEFAULT_TIME_OUT                5
+#define DEFAULT_TIME_OUT                70
 
 #endif
