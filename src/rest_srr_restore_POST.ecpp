@@ -36,22 +36,15 @@ using namespace dto::srr;
 
 static std::string restoreIpm2Configuration(const std::string& inputData)
 {
-    // Get restore query    
-    Query query = restoreQueryFromUiJson(inputData);
-    // Transform it to UserData
     dto::UserData reqData;
-    reqData << query;
+    reqData.push_back(inputData);
     // Send request
     dto::UserData respData = sendRequest("restore", reqData);
     if (respData.empty())
     {
        throw std::runtime_error("Restore error.");
     }
-    // Get Response
-    Response response;
-    respData >> response;
-    //Transform it to publish on UI
-    return responseToUiJson(response);
+    return respData.front();
 }
 
 </%pre>

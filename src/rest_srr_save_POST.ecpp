@@ -35,22 +35,15 @@ using namespace dto::srr;
  */
 static std::string saveIpm2Configuration(const std::string &inputData)
 {
-    // Get save query
-    Query query = saveQueryFromUiJson(inputData);
-    // Transform it to UserData
     dto::UserData reqData;
-    reqData << query;
+    reqData.push_back(inputData);
     // Send request
     dto::UserData respData = sendRequest("save", reqData);
     if (respData.empty())
     {
        throw std::runtime_error("Save error.");
     }
-    // Get Response
-    Response response;
-    respData >> response;
-    //Transform it to publish on UI
-    return responseToUiJson(response);
+    return respData.front();
 }
 
 
