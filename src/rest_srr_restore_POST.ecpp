@@ -34,17 +34,27 @@ using namespace dto::srr;
  *
  */
 
-static std::string restoreIpm2Configuration(const std::string& inputData)
+static std::string restoreIpm2Configuration(const std::string& inputData, bool force)
 {
     dto::UserData reqData;
     reqData.push_back(inputData);
+    if(force) {
+        reqData.push_back("force");
+    }
     // Send request
     dto::UserData respData = sendRequest("restore", reqData);
-    if (respData.empty())
+
+    // respData[0] -> status
+    // respData[1] -> data
+    if (respData.size() != 2)
     {
        throw std::runtime_error("Restore error.");
     }
-    return respData.front();
+
+    if(respData.front() == "unknown") {
+        throw std::logic_error(respData.back());
+    }
+    return respData.back();
 }
 
 </%pre>
@@ -61,8 +71,15 @@ UserInfo user;
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
     
     try
-    {   
-        reply.out() << restoreIpm2Configuration(request.getBody());
+    {
+        // force parameter to skip integrity check
+        std::string force = qparam.param("force");
+
+        reply.out() << restoreIpm2Configuration(request.getBody(), force == "true");
+    }
+    catch (std::logic_error& ex)
+    {
+        http_die ("precondition-failed", ex.what());
     }
     catch (std::runtime_error& ex)
     {
