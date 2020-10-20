@@ -39,11 +39,14 @@ static std::string saveIpm2Configuration(const std::string &inputData)
     reqData.push_back(inputData);
     // Send request
     dto::UserData respData = sendRequest("save", reqData);
-    if (respData.empty())
+
+    // respData[0] -> status
+    // respData[1] -> data
+    if (respData.size() != 2)
     {
        throw std::runtime_error("Save error.");
     }
-    return respData.front();
+    return respData.back();
 }
 
 
