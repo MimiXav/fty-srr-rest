@@ -69,6 +69,11 @@ UserInfo user;
     };
 
     CHECK_USER_PERMISSIONS_OR_DIE(PERMISSIONS);
+
+    if (!user.reauth())
+    {
+        http_die("internal-error", "Wrong confirmation password");
+    }
     
     try
     {
