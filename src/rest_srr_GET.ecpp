@@ -20,7 +20,7 @@
 /*!
  * \file rest_srr_GET.ecpp
  * \author Xavier Millieret <XavierMillieret@Eaton.com>
- * \brief Implementation of GET to retrieve features list.
+ * \brief Implementation of GET to retrieve group list.
  */
  #><%pre>
 
@@ -34,22 +34,14 @@ using namespace dto::srr;
  */
 static std::string getFeatureListManaged()
 {
-    // Create list feature  query
-    Query query = createListFeatureQuery();
-    // Transform it to UserData
     dto::UserData reqData;
-    reqData << query;
     // Send request
-    dto::UserData respData = sendRequest("getFeatureList", reqData);
+    dto::UserData respData = sendRequest("list", reqData);
     if (respData.empty())
     {
-       throw std::runtime_error("Get features list error.");
+       throw std::runtime_error("Get group list error.");
     }
-    // Get Response
-    Response response;
-    respData >> response;
-    // Transform it to publish on UI
-    return responseToUiJson(response);
+    return respData.front();
 }
 
 </%pre>

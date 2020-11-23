@@ -1,7 +1,7 @@
     <!-- GET features list available for SRR -->
     <mapping>
       <target>rest_srr_GET@libfty_srr_rest</target>
-      <url>^/api/v1/admin/srr/features$</url>
+      <url>^/api/v1/admin/srr/list$</url>
       <method>GET</method>
     </mapping>
 
