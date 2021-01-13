@@ -88,7 +88,7 @@ UserInfo user;
     }
     catch (std::runtime_error& ex)
     {
-        http_die ("internal-error", TRANSLATE_ME ("SrrException on save IPM2").c_str());
+        http_die ("internal-error", TRANSLATE_ME ("SrrException on restore IPM2").c_str());
     }
     
 </%cpp>
