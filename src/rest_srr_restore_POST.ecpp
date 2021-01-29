@@ -34,13 +34,15 @@ using namespace dto::srr;
  *
  */
 
-static std::string restoreIpm2Configuration(const std::string& inputData, bool force)
+static std::string restoreIpm2Configuration(const std::string& inputData, const std::string& bearer, bool force)
 {
     dto::UserData reqData;
     reqData.push_back(inputData);
     if(force) {
         reqData.push_back("force");
     }
+    reqData.push_back(bearer);
+
     // Send request
     dto::UserData respData = sendRequest("restore", reqData);
 
@@ -60,7 +62,7 @@ static std::string restoreIpm2Configuration(const std::string& inputData, bool f
 </%pre>
 <%request scope="global">
 UserInfo user;
-//std::string gaccess_token;
+std::string gaccess_token;
 </%request>
 <%cpp>
     // check user permissions
@@ -74,13 +76,13 @@ UserInfo user;
     {
         http_die("internal-error", "Wrong confirmation password");
     }
-    
+
     try
     {
         // force parameter to skip integrity check
         std::string force = qparam.param("force");
 
-        reply.out() << restoreIpm2Configuration(request.getBody(), force == "true");
+        reply.out() << restoreIpm2Configuration(request.getBody(), gaccess_token, force == "true");
     }
     catch (std::logic_error& ex)
     {
@@ -90,6 +92,5 @@ UserInfo user;
     {
         http_die ("internal-error", TRANSLATE_ME ("SrrException on restore IPM2").c_str());
     }
-    
+
 </%cpp>
-        
