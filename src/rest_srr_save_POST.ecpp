@@ -33,11 +33,10 @@ using namespace dto::srr;
  * Get IPM2 configuration data from an input list
  *
  */
-static std::string saveIpm2Configuration(const std::string &inputData, const std::string &bearer)
+static std::string saveIpm2Configuration(const std::string &inputData)
 {
     dto::UserData reqData;
     reqData.push_back(inputData);
-    reqData.push_back(bearer);
 
     // Send request
     dto::UserData respData = sendRequest("save", reqData);
@@ -68,7 +67,8 @@ std::string gaccess_token;
 
     try
     {
-        reply.out() << saveIpm2Configuration(request.getBody(), gaccess_token);
+        std::string requestPayload = addSessionToken(request.getBody(), gaccess_token);
+        reply.out() << saveIpm2Configuration(requestPayload);
     }
     catch (std::runtime_error& ex)
     {

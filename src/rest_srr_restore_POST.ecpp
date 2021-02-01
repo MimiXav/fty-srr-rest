@@ -34,14 +34,13 @@ using namespace dto::srr;
  *
  */
 
-static std::string restoreIpm2Configuration(const std::string& inputData, const std::string& bearer, bool force)
+static std::string restoreIpm2Configuration(const std::string& inputData, bool force)
 {
     dto::UserData reqData;
     reqData.push_back(inputData);
     if(force) {
         reqData.push_back("force");
     }
-    reqData.push_back(bearer);
 
     // Send request
     dto::UserData respData = sendRequest("restore", reqData);
@@ -81,8 +80,8 @@ std::string gaccess_token;
     {
         // force parameter to skip integrity check
         std::string force = qparam.param("force");
-
-        reply.out() << restoreIpm2Configuration(request.getBody(), gaccess_token, force == "true");
+        std::string requestPayload = addSessionToken(request.getBody(), gaccess_token);
+        reply.out() << restoreIpm2Configuration(requestPayload, force == "true");
     }
     catch (std::logic_error& ex)
     {

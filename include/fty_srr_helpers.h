@@ -37,9 +37,17 @@ dto::UserData sendRequest(const std::string& action, const dto::UserData& userDa
 /**
  * Utility to split a string with a delimiter into a string vector.
  * @param input string
- * @param delimiter 
+ * @param delimiter
  * @return A list of string splited.
  */
 std::vector<std::string> splitString(const std::string input, const char delimiter);
+
+/**
+ * Utility to adding a session token from an existing payload.
+ * @param input string
+ * @param sessionToken string
+* @return A json payload with the session token.
+ */
+const std::string addSessionToken(const std::string input, const std::string sessionToken);
 
 #endif

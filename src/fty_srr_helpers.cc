@@ -32,6 +32,8 @@
 #include <cxxtools/jsonserializer.h>
 #include <cxxtools/jsondeserializer.h>
 
+#include <fty_common_json.h>
+
 /**
  * Send a request and wait reply in synchronous mode.
  * @param subject
@@ -64,15 +66,33 @@ dto::UserData sendRequest(const std::string& action, const dto::UserData& userDa
  * @param delimiter
  * @return A list of string splited.
  */
-std::vector<std::string> splitString(const std::string input, const char delimiter) 
+std::vector<std::string> splitString(const std::string input, const char delimiter)
 {
     std::vector<std::string> resultList;
     std::stringstream ss(input);
-    
+
     std::string token;
-    while (std::getline(ss, token, delimiter)) 
+    while (std::getline(ss, token, delimiter))
     {
         resultList.push_back (token);
     }
     return resultList;
+}
+
+/**
+ * Utility to adding the session token from an existing payload.
+ * @param input string
+ * @param sessionToken string
+ * @return A json payload with the session token.
+ */
+const std::string addSessionToken(const std::string input, const std::string sessionToken)
+{
+  cxxtools::SerializationInfo si;
+  JSON::readFromString(input, si);
+  // TODO replacing "SESSION_TOKEN" by SESSION_TOKEN
+  if (si.findMember("SESSION_TOKEN") == NULL)
+  {
+    si.addMember("SESSION_TOKEN") <<= sessionToken;
+  }
+  return JSON::writeToString (si, false);
 }
